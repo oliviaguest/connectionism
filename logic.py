@@ -2,16 +2,16 @@ from pyceptron import *
 
 ''' This file contains the patterns used in the excersises for teaching the network logic '''
 
-Patterns = [ ## NOT ##
-            [0.0],
-            [1.0],
-           ]
+#Patterns = [ ## NOT ##
+            #[0.0],
+            #[1.0],
+           #]
 
-Targets = [
-           [1.0], #first target, corresponds to first pattern
-           [0.0],
+#Targets = [
+           #[1.0], #first target, corresponds to first pattern
+           #[0.0],
          
-          ]
+          #]
           
           
 #Patterns = [ ## OR ##
@@ -30,20 +30,20 @@ Targets = [
           #]
           
          
-#Patterns = [ ## AND ##
-            #[0.0, 0.0],
-            #[0.0, 1.0],
-            #[1.0, 0.0],
-            #[1.0, 1.0]
-           #]
+Patterns = [ ## AND ##
+            [0.0, 0.0],
+            [0.0, 1.0],
+            [1.0, 0.0],
+            [1.0, 1.0]
+           ]
 
-#Targets = [
-           #[0.0], #first target, corresponds to first pattern
-           #[0.0],
-           #[0.0],
-           #[1.0],
+Targets = [
+           [0.0], #first target, corresponds to first pattern
+           [0.0],
+           [0.0],
+           [1.0],
          
-          #]  
+          ]  
           
 #Patterns = [ ## XOR ##
           #[0.0, 0.0],

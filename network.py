@@ -10,7 +10,10 @@ import os
 import numpy as np
 import time
 import logic
+from scipy.special import expit, logit
 
+np.set_printoptions(precision=2)
+       
 
 def Random(max_value, min_value = 0):
   "Random integer from min_value to max_value"
@@ -77,13 +80,16 @@ class Network(gtk.DrawingArea):
       
 
     
-    def __init__(self, width, height, patterns = None, targets = None, learning_rate = 0.005, unit_width = 10):
+    def __init__(self, width, height, patterns = None, targets = None, learning_rate = 0.005, unit_width = 10, hidden_width = None):
 
         super(Network,self).__init__()
         #global width
         #global height
         self.width = width#*11 + 20 # we want padding on both sides
-        self.height = height#*11 +10  #we do not want padding on the bottom due to the way packing is done
+        self.height = height
+        self.layers = self.height
+        #*11 +10  #we do not want padding on the bottom due to the way packing is done
+        print width, height
         self.set_size_request(self.width*(unit_width+1) + 20 , self.height*(unit_width+1) + 20)
         self.tick = 0
         self.ticks = 0
@@ -100,15 +106,53 @@ class Network(gtk.DrawingArea):
         ##self.cr = self.window.cairo_create()
         self.current_pattern = 0
 
-        self.input_units =  np.zeros(len(patterns[0])+1)
+        self.input_units =  np.zeros(len(patterns[0]))
+        self.input_units = np.append(self.input_units, 1)
         self.output_units = np.zeros(len(targets[0]))
-        self.hidden_units = np.zeros(1 + 1)
+        self.output_errors = np.zeros(len(targets[0]))
+        
+
+           
+        self.tanh = np.tanh
+
+        self.tanh_deriv = lambda x: 1.0 - np.tanh(x)**2     
+        
+        
+        self.activation_function = self.tanh
+        self.inverse_activation_function = self.tanh_deriv
+        
+        if hidden_width and height == 3:
+          self.hidden_width = hidden_width
+          self.hidden_units = np.zeros(self.hidden_width)
+          self.hidden_units = np.append(self.hidden_units, 1)
+          self.hidden_errors = np.zeros(len(self.hidden_units))
+
+
+        else:
+          self.hidden_width = 0
+          self.hidden_units = None
+        
         self.patterns = patterns
         self.targets = np.asarray(targets)
         self.learning_rate = learning_rate
-        self.weights = np.random.normal(0.0, 0.001, len(self.input_units))
+
+        if self.hidden_width:
+          self.weights =  np.random.normal(0.0, 0.0001, (len(self.input_units), len(self.hidden_units)))
+          #for i in range(len(self.hidden_units)):
+            #self.weights[i] = np.random.normal(0.0, 0.0001, len(self.input_units))
+          self.weights_i2h = self.weights
+          self.weights_h2o = np.random.normal(0.0, 0.0001, (len(self.hidden_units), len(self.output_units)))
+          #print self.weights
+          self.output_deltas = np.zeros_like(self.weights_h2o)
+          self.hidden_deltas = np.zeros_like(self.weights_i2h)
+        else:
+          self.weights = np.random.normal(0.0, 0.0001, (len(self.input_units), len(self.output_units)))
+        print self.weights
+
         self.errors = np.zeros(len(targets[0]))
-        self.layers = 2
+        
+        
+        print "height", self.height
         
         def f(x):
           if x < 0.0:
@@ -117,10 +161,11 @@ class Network(gtk.DrawingArea):
             return 1.0
           
         self.activation_function = np.vectorize(f) 
-        
+
+
         self.input_width = len(self.input_units) - 1
         self.output_width = len(self.output_units)
-        self.hidden_width = len(self.hidden_units) - 1
+
 
         
         #self.layers = []
@@ -154,12 +199,7 @@ class Network(gtk.DrawingArea):
     def _draw(self):
       cr = self.window.cairo_create()
       cr.set_antialias(cairo.ANTIALIAS_NONE)
-      for layer in self.layers:
-        #layer.set_colour(np.random.uniform(low=0.0, high=1.0, size=3))
-        #layer.Run([1, 0])
-        #cr = self.window.cairo_create()
-        #cr.set_antialias(cairo.ANTIALIAS_NONE)
-        layer.Draw(cr, *self.window.get_size())
+      self.Draw(cr, *self.window.get_size())
         
 
     def _propagate(self, pattern = 0):
@@ -169,49 +209,89 @@ class Network(gtk.DrawingArea):
         #output = self.hidden_layer.Run(output)
       #output = self.output_layer.Run(output)
       #print output
-      x = self.input_units 
-      y = self.output_units
-      w = self.weights
-      h = self.learning_rate
-      d = self.targets
-      N = len(self.patterns[0])
-      P = len(self.patterns)
-      p = pattern
-      f = self.activation_function
-      for i in range(N):
-        x[i] = self.patterns[p][i]
-        y[0] = 0
-        for i in range(N+1):
-          y[0] += x[i] * w[i]
-        y[0] = f(y[0])
-
-        error = self.targets[p][0] - f(y[0])
-
-        #self.Draw()
-
+      
+      if self.layers == 2:
+        x = self.input_units 
+        h = self.hidden_units
+        y = self.output_units
+        w = self.weights
+        d = self.targets
+        N = len(self.patterns[0])
+        P = len(self.patterns)
+        H = self.hidden_width
+        p = pattern
+        f = self.activation_function
         
-    def _train(self, pattern = 0):
+        for i in range(N):
+          x[i] = self.patterns[p][i]
+          y[0] = 0
+          for i in range(N+1):
+            y[0] += x[i] * w[i]
+          y[0] = f(y[0])
+
+          error = self.targets[p][0] - f(y[0])
+      elif self.layers == 3:
+        #self.Draw()
+        x = self.input_units 
+        h = self.hidden_units
+        y = self.output_units
+        w_i2h = self.weights_i2h
+        w_h2o = self.weights_h2o
+        l = self.learning_rate
+        d = self.targets
+        N = len(self.patterns[0])
+        P = len(self.patterns)
+        H = self.hidden_width
+        p = pattern
+        f = self.activation_function
+            
+        for i in range(N):    
+          x[i] = self.patterns[p][i]
+          
+        #x[0:2] = self.patterns[p][:]  
+        
+        #y[0] = 0
+        #for i in range(N+1): 
+          #y[0] += x[i] * w[i]
+        print '\n' 
+        print "x", x
+        print "input->hidden", w_i2h
+        print "pre h", h
+
+        h = np.dot(np.transpose(x), w_i2h)
+        
+        h = f(h)
+        print "h", h
+        y = np.dot(h, w_h2o)
+
+        #y[0] = f(y[0])
+        
+        y = f(y)
+              
+    def Perceptron(self, pattern = None):
       x = self.input_units 
-      
-      h = self.hidden_units 
-      
       y = self.output_units
       w = self.weights
-      h = self.learning_rate
+      l = self.learning_rate
       d = self.targets
       N = len(self.patterns[0])
       P = len(self.patterns)
-      p = pattern
+      if pattern:
+        p = pattern
+      else: 
+        p = self.current_pattern 
       f = self.activation_function
+      e = self.output_errors
           
       for i in range(N):    
         x[i] = self.patterns[p][i]
         
       #x[0:2] = self.patterns[p][:]  
       
-      y[0] = 0
-      for i in range(N+1): 
-        y[0] += x[i] * w[i]
+      for j in range(len(y)):
+        y[j]= 0
+        for i in range(N+1): 
+          y[j] += x[i] * w[i]
         
       #y[0] = np.dot(x, w)
       
@@ -220,16 +300,97 @@ class Network(gtk.DrawingArea):
       print len(self.output_units)
       self.output_units = y
       #error = d[p][0] - y[0]
-      error = d[p] - y
+      for j in range(len(y)):
+        for i in range(N+1): 
+          e[j] = d[p] - y[j]
+
+      #for i in range(N+1): 
+        #w[i] += h * error * x[i]
+      for j in range(len(y)):
+        y[j]= 0
+        for i in range(N+1): 
+          w[i] += l * e[j] * x[i]
+      #print w
+      #print self.weights
+      print  x, '->',  y, e
+      #time.sleep(1)
+      
+      
+      
+    def Backprop(self, pattern = None):
+      x = self.input_units 
+      h = self.hidden_units
+      y = self.output_units
+      w_i2h = self.weights_i2h
+      w_h2o = self.weights_h2o
+      e_h = self.hidden_errors
+      e_o = self.output_errors
+      d_o = self.output_deltas
+      d_h = self.hidden_deltas
+      l = self.learning_rate
+      t = self.targets
+      N = len(self.patterns[0])
+      P = len(self.patterns)
+      H = self.hidden_width
+      if pattern:
+        p = pattern
+      else: 
+        p = self.current_pattern
+      f = self.activation_function
+      f_prime  = self.inverse_activation_function
+          
+      for i in range(N):    
+        x[i] = self.patterns[p][i]
+        
+      #x[0:2] = self.patterns[p][:]  
+      
+      #y[0] = 0
+      #for i in range(N+1): 
+        #y[0] += x[i] * w[i]
+      print x
+      print w_i2h
+      h = np.dot(np.transpose(x), w_i2h)
+      print "h", f(h), "h'", h
+      h = f(h)
+      
+      y = np.dot(h, w_h2o)
+
+      #y[0] = f(y[0])
+      print "y", f(y), "y'", y
+
+      y = f(y)
+      
+      #error = d[p][0] - y[0]
+      e_o = t[p] - y
+      #print 'weights', w_h2o
+      #print 'delta weights', np.transpose(np.dot( w_h2o, f_prime(y)))
+      
+      d_o += np.dot(f_prime(y), e_o)
+      
+      e_h = np.dot(np.transpose(d_o), f_prime(h))
+      d_h += np.dot(f_prime(h), w_i2h)
+      print "h", h, "h'", f_prime(h) 
+      print "y", y, "y'", f_prime(y)
+      print "output error", e_o
+      print "output deltas", d_o
+      print "hidden deltas", d_h
 
       #for i in range(N+1): 
         #w[i] += h * error * x[i]
         
-      w += h * error * x
+      #w += h * error * x
       #print w
       #print self.weights
-      print  x, '->',  y, error
-      #time.sleep(1)
+      #print  x, '->',  y, error
+    def Apply_Deltas(self):
+      w_i2h = self.weights_i2h
+      w_h2o = self.weights_h2o
+      d_o = self.output_deltas
+      d_h = self.hidden_deltas
+      
+      w_h2o += d_o
+      
+      w_i2h += d_h
       
       
     def Run(self):
@@ -242,8 +403,8 @@ class Network(gtk.DrawingArea):
         #self.ticks = ticks
       print "tick", self.tick, self.current_pattern, len(self.patterns)
 
-      #self.Propagate(self.current_pattern)
-      self._train(self.current_pattern)
+      self.Propagate(self.current_pattern)
+
       
       if self.current_pattern >= (len(self.patterns)-1):
         self.current_pattern = 0
@@ -255,7 +416,8 @@ class Network(gtk.DrawingArea):
       cr = self.window.cairo_create()
       cr.set_antialias(cairo.ANTIALIAS_NONE)
       self.Draw(cr, *self.window.get_size())
-  
+      #self.redraw_canvas()
+
 
       if self.running and not self.paused:
         return True
@@ -277,11 +439,17 @@ class Network(gtk.DrawingArea):
       print "tick", self.tick, self.current_pattern, len(self.patterns)
 
       #self.Propagate(self.current_pattern)
-      self._train(self.current_pattern)
-      
+      if self.layers == 2:
+        self.Perceptron()
+      elif self.layers == 3:
+        self.Backprop()
+        
       if self.current_pattern >= (len(self.patterns)-1):
         self.current_pattern = 0
         self.tick += 1
+        
+        if self.layers == 3:
+          self.Apply_Deltas()
         
       else: 
         self.current_pattern += 1
@@ -308,7 +476,7 @@ class Network(gtk.DrawingArea):
       print "tick", self.tick, self.current_pattern, len(self.patterns)
 
       #self.Propagate(self.current_pattern)
-      self._train(self.current_pattern)
+      self.Train()
       
       if self.current_pattern >= (len(self.patterns)-1):
         self.current_pattern = 0
@@ -391,10 +559,11 @@ class Network(gtk.DrawingArea):
          
         j = 0
         for i in range(self.input_width):
-          j = 0
+          #j = 0
           cr.set_source_rgb(1.0 - self.input_units[i], 1.0 - self.input_units[i], 1.0 - self.input_units[i])
           x = (width - self.input_width * (self.unit_width+1) - 20) / 2.0 + 10 + (i * (self.unit_width+1) )
           y = j * (self.unit_width+1)+ 10
+
           cr.rectangle(x, y, self.unit_width, self.unit_width)
           cr.fill()
           
@@ -405,25 +574,24 @@ class Network(gtk.DrawingArea):
           cr.move_to(self.unit_width/2.0 + x - text_width/2.0, self.unit_width/2.0 + y + text_height/2.0)
           cr.show_text(str(self.input_units[i]))
 
-        j += 1
-        for i in range(self.hidden_width):
-          print "hidden unit", self.hidden_units[i]
-          cr.set_source_rgb(1.0 - self.hidden_units[i], 1.0 - self.hidden_units[i], 1.0 - self.hidden_units[i])
-          x = (width - self.output_width * (self.unit_width+1) - 20) / 2.0 + 10 + (i * (self.unit_width+1) )
-          y = j * (self.unit_width+1)+ 10
-          cr.rectangle(x, y, self.unit_width, self.unit_width)
-          cr.fill()
-          
-          cr.set_source_rgb(self.hidden_units[i], self.hidden_units[i], self.hidden_units[i])
+        if self.hidden_width:
+          j += 1
+          for i in range(self.hidden_width):
+            cr.set_source_rgb(1.0 - self.hidden_units[i], 1.0 - self.hidden_units[i], 1.0 - self.hidden_units[i])
+            x = (width - self.hidden_width * (self.unit_width+1) - 20) / 2.0 + 10 + (i * (self.unit_width+1) )
+            y = j * (self.unit_width+1)+ 10
+            cr.rectangle(x, y, self.unit_width, self.unit_width)
+            cr.fill()
+            
+            cr.set_source_rgb(self.hidden_units[i], self.hidden_units[i], self.hidden_units[i])
 
-          (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(self.hidden_units[i])) 
+            (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(self.hidden_units[i])) 
 
-          cr.move_to(self.unit_width/2.0 + x - text_width/2.0, self.unit_width/2.0 + y + text_height/2.0)
-          cr.show_text(str(self.hidden_units[i]))
+            cr.move_to(self.unit_width/2.0 + x - text_width/2.0, self.unit_width/2.0 + y + text_height/2.0)
+            cr.show_text(str(self.hidden_units[i]))
 
         j += 1
         for i in range(self.output_width):
-          print "output unit", self.output_units[i]
           cr.set_source_rgb(1.0 - self.output_units[i], 1.0 - self.output_units[i], 1.0 - self.output_units[i])
           x = (width - self.output_width * (self.unit_width+1) - 20) / 2.0 + 10 + (i * (self.unit_width+1) )
           y = j * (self.unit_width+1)+ 10
@@ -438,10 +606,18 @@ class Network(gtk.DrawingArea):
           cr.show_text(str(self.output_units[i]))
 
 
-    
-    def Reset(self, width, height, unit_width, patterns, targets):
+    def Clamp(self, pattern):
+      x = self.input_units 
+      p = pattern
+      N = len(self.patterns[0])
+
+      for i in range(N):
+        x[i] = self.patterns[p][i]
+      self._draw()
+      
+    def Reset(self, width, height, unit_width, patterns, targets, hidden_width):
       print self.width, self.height
-      self.__init__(width, height, unit_width = unit_width, patterns = patterns, targets = targets)
+      self.__init__(width, height, unit_width = unit_width, patterns = patterns, targets = targets, hidden_width = hidden_width)
       print self.width, self.height
 
       self.redraw_canvas()
@@ -508,11 +684,17 @@ class Model:
       glib.idle_add(self.Status_update)
       glib.idle_add(self.If_running)
       glib.idle_add(self.If_paused)
-
+    
+    def Clamp(self, widget=None, data=None):
+      self.network.Clamp(self.pattern_spin_button.get_value_as_int())
+    
     def Reset(self, widget=None, data=None):
       #[network, play, pause]
       #print 'combobox', self.layer_combobox.get_active_text()
-      self.network.Reset(self.width_spin_button.get_value_as_int(), int(self.layer_combobox.get_active_text()), self.unit_width_spin_button.get_value_as_int(), patterns = logic.Patterns, targets = logic.Targets)
+      print 'height', int(self.layer_combobox.get_active_text())
+
+      self.network.Reset(width = self.width_spin_button.get_value_as_int(), height = int(self.layer_combobox.get_active_text()), unit_width = self.unit_width_spin_button.get_value_as_int(),
+                             patterns = self.patterns, targets = self.targets, hidden_width = self.width_spin_button.get_value_as_int())
       self.pause.set_label('Pause')
       self.pause.set_sensitive(self.network.paused)
       glib.idle_add(self.If_running)
@@ -579,9 +761,9 @@ class Model:
       self.width_spin_button = gtk.SpinButton(adjustment, climb_rate=0, digits=0)
       
       self.layer_combobox = gtk.combo_box_new_text()
-      for i in range(2, 4):
-                self.layer_combobox.append_text(str(i))        
-      self.layer_combobox.set_active(0)
+      self.layer_combobox.append_text("2")        
+      self.layer_combobox.append_text("3")   
+      self.layer_combobox.set_active(1)
       
       adjustment = gtk.Adjustment(value=2, lower=1, upper=100, step_incr=5, page_incr=5)
       self.height_spin_button = gtk.SpinButton(adjustment, climb_rate=0, digits=0)
@@ -590,7 +772,7 @@ class Model:
       
       adjustment = gtk.Adjustment(value=0, lower=0, upper=len(self.patterns)-1, step_incr=1, page_incr=1)
       self.pattern_spin_button = gtk.SpinButton(adjustment, climb_rate=0, digits=0)
-    
+      self.pattern_spin_button.set_wrap(True)
       # Create a series of buttons with the appropriate settings
       self.play = gtk.Button("Train")
       self.pause = gtk.Button("Pause")
@@ -604,10 +786,10 @@ class Model:
       self.width_spin_button.connect("value_changed", self.Reset)
       self.height_spin_button.connect("value_changed", self.Reset)
       self.unit_width_spin_button.connect("value_changed", self.Reset)
+      self.pattern_spin_button.connect("value_changed", self.Clamp)
       self.layer_combobox.connect('changed', self.Reset)
-
-      self.network = Network(width = self.width_spin_button.get_value_as_int(), height = 3, unit_width = self.unit_width_spin_button.get_value_as_int(),
-                             patterns = self.patterns, targets = self.targets)
+      self.network = Network(width = self.width_spin_button.get_value_as_int(), height = int(self.layer_combobox.get_active_text()), unit_width = self.unit_width_spin_button.get_value_as_int(),
+                             patterns = self.patterns, targets = self.targets, hidden_width = self.width_spin_button.get_value_as_int())
       self.network.show()
       self.pause.set_sensitive(self.network.paused)
 
@@ -643,20 +825,17 @@ class Model:
       self.hbox.pack_start(label, expand, fill, 0)
       self.hbox.pack_start(self.iterations_spin_button, expand, fill, padding)
       
-      #label = gtk.Label("Hidden units:") 
-      #label.show()
-      #self.hbox.pack_start(label, expand, fill, padding)
-      #self.hbox.pack_start(self.width_spin_button, expand, fill, 0)
+      label = gtk.Label("Hidden units:") 
+      label.show()
+      self.hbox.pack_start(label, expand, fill, padding)
+      self.hbox.pack_start(self.width_spin_button, expand, fill, 0)
       
       label = gtk.Label("Unit size:") 
       label.show()
       self.hbox.pack_start(label, expand, fill, 0)
       self.hbox.pack_start(self.unit_width_spin_button, expand, fill, padding)
       
-      #label = gtk.Label("Number of layers:") 
-      #label.show()
-      #self.hbox.pack_start(label, expand, fill, padding)
-      #self.hbox.pack_start(self.layer_combobox, expand, fill, 0)
+
       
       self.hbox2.pack_start(self.step, expand, fill, padding)      
       
@@ -664,6 +843,11 @@ class Model:
       label.show()
       self.hbox2.pack_start(label, expand, fill, 0)
       self.hbox2.pack_start(self.pattern_spin_button, expand, fill, padding)
+      
+      label = gtk.Label("Layers:") 
+      label.show()
+      self.hbox2.pack_start(label, expand, fill, padding)
+      self.hbox2.pack_start(self.layer_combobox, expand, fill, 0)
       
       self.quit = gtk.Button("Quit")
       self.quit.connect("clicked", self.destroy, None)

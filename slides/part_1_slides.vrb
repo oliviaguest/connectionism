@@ -1,0 +1,32 @@
+\frametitle{While loops}
+\framesubtitle{More magic!}
+
+%      \end{column}
+
+%          \begin{column}{.5\textwidth}
+         Text editor:
+\begin{lstlisting}[style=base]
+@1while True:@
+    @2n = raw_input("Please enter 'hello':")@
+    @3if n == 'hello':@
+        @4break@
+
+\end{lstlisting}
+
+\vfill
+
+Python output:
+\begin{lstlisting}[style=base]
+@5Please enter 'hello':no@
+@6Please enter 'hello':never@
+@7Please enter 'hello':hi?@
+@8Please enter 'hello':hello@
+@9>>>@
+
+
+\end{lstlisting}
+
+%     \end{column}
+%     \end{columns}
+
+%More content goes here
