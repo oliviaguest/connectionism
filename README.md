@@ -15,6 +15,7 @@ To be added soon.
 ###Books
 - [Learn Python the Hard Way](http://learnpythonthehardway.org/book/)
 - [How to Think Like a Computer Scientist: Learning with Python](http://www.openbookproject.net/thinkcs/python/english2e/)
+- [Think Python: How to Think Like a Computer Scientist](http://www.greenteapress.com/thinkpython/)
 
 ##Online Courses
 - [Machine Learning](https://www.coursera.org/learn/machine-learning/) by Andrew Ng
