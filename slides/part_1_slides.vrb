@@ -5,11 +5,11 @@
 
 %          \begin{column}{.5\textwidth}
          Text editor:
-\begin{lstlisting}[style=base]
-@1while True:@
-    @2n = raw_input("Please enter 'hello':")@
-    @3if n == 'hello':@
-        @4break@
+\begin{lstlisting}[style=highlight]
+while True:
+    n = raw_input("Please enter 'hello':")
+    if n == 'hello':
+        break
 
 \end{lstlisting}
 
@@ -17,11 +17,11 @@
 
 Python output:
 \begin{lstlisting}[style=base]
-@5Please enter 'hello':no@
-@6Please enter 'hello':never@
-@7Please enter 'hello':hi?@
-@8Please enter 'hello':hello@
-@9>>>@
+@2Please enter 'hello':no@
+@3Please enter 'hello':never@
+@4Please enter 'hello':hi?@
+@5Please enter 'hello':hello@
+@6>>>@
 
 
 \end{lstlisting}

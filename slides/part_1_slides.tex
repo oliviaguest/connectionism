@@ -1,7 +1,7 @@
 \documentclass{beamer}
 \usepackage{color}
 
-
+\usepackage{hyperref}
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
 \usepackage{default}
@@ -17,14 +17,17 @@
 breakatwhitespace=false, showspaces=false, showtabs=false, breakatwhitespace=false, breaklines=false, 
 backgroundcolor=\color{codebg}}
 
-\lstdefinestyle{highlight}{keywordstyle=\color{blue},
-breakatwhitespace=false, showspaces=false, showtabs=false, breakatwhitespace=false, breaklines=false, 
-commentstyle=\ttfamily\color{purple}}
+\lstdefinestyle{highlight}{  basicstyle=\ttfamily\color{black},
+  breakatwhitespace=false, showspaces=false,showstringspaces=false, showtabs=false, breakatwhitespace=false, breaklines=false, 
+  keywordstyle=\ttfamily\color{blue},
+  commentstyle=\ttfamily\color{purple}
+}
+
 \lstdefinestyle{base}{
 %   language=Python,
   basicstyle=\ttfamily\color{codebg},
   breakatwhitespace=false, showspaces=false,showstringspaces=false, showtabs=false, breakatwhitespace=false, breaklines=false, 
-  keywordstyle=\color{codebg},
+  keywordstyle=\ttfamily\color{codebg},
   commentstyle=\ttfamily\color{codebg},
   moredelim=**[is][\only<1->{\color{black}\lstset{style=highlight}}]{@}{@},
   moredelim=**[is][\only<1->{\color{black}\lstset{style=highlight}}]{@1}{@},
@@ -60,31 +63,21 @@ commentstyle=\ttfamily\color{purple}}
 % 
 % ``Getting an education was a bit like a communicable sexual disease. It made you unsuitable for a lot of jobs and then you had the urge to pass it on.''
 % \\ \
-\centering\Huge Welcome to the introduction to computational cognitive modelling workshop! 
+\centering\Huge Block Practical: Connectionist models and cognitive processes
 \vfill \huge
 \centering\textbf{Part 1: Introduction to Python} \normalsize
 
 \vfill
+\textit{
+Olivia Guest 
+% \hfill  Chris Brand 
+% \vspace{0.5cm} \\ \ 
+% Nick Sexton \hfill Nicole Cruz De Echeverria Loebell 
+} 
 % \textit{Olivia Guest \hfill  Chris Brand \\  \ Nick Sexton \hfill Nicole Cruz De Echeverria Loebell } 
 % -- \textit{Terry Pratchett}
 \end{frame}
 
-\begin{frame}
-% % \frametitle{What is programming?}
-% \framesubtitle{It is like use using any other language!}
-% 
-% ``Getting an education was a bit like a communicable sexual disease. It made you unsuitable for a lot of jobs and then you had the urge to pass it on.''
-% \\ \
-\vfill \Huge
-\centering Part 1: \textbf{Introduction to Python} \large
-
-\vfill
-\textit{
-Olivia Guest \hfill  Chris Brand 
-\vspace{0.5cm} \\ \ 
-Nick Sexton \hfill Nicole Cruz De Echeverria Loebell } 
-% -- \textit{Terry Pratchett}
-\end{frame}
 
 
 \begin{frame}
@@ -382,7 +375,7 @@ Maddy Petrovich, 14, of Wellesley, Mass. first started learning how to use the p
 @6>>> print i@
 @76@
 @8>>> i += 0.8@
-@97.8
+@96.8
 \end{lstlisting}
 
     \end{column}
@@ -429,7 +422,7 @@ Maddy Petrovich, 14, of Wellesley, Mass. first started learning how to use the p
 @5>>> b = a / 2@
 @5>>> c = b**2@
 @6>>> print a, b, c@
-@78 4 6@
+@78 4 16@
 \end{lstlisting}
 
     \end{column}
@@ -730,9 +723,9 @@ Python output:\begin{lstlisting}[style=base]
      
          \begin{column}{.5\textwidth} 
          Text editor:
-\begin{lstlisting}[style=base]
-@for i in range(1,6):@
-@  print i@
+\begin{lstlisting}[style=highlight]
+for i in range(1,6):
+  print i
 
 \end{lstlisting}
 
@@ -799,11 +792,11 @@ Python output:
      
 %          \begin{column}{.5\textwidth} 
          Text editor:
-\begin{lstlisting}[style=base]
-@1while True:@
-    @2n = raw_input("Please enter 'hello':")@
-    @3if n == 'hello':@
-        @4break@
+\begin{lstlisting}[style=highlight]
+while True:
+    n = raw_input("Please enter 'hello':")
+    if n == 'hello':
+        break
 
 \end{lstlisting}
 
@@ -811,11 +804,11 @@ Python output:
 
 Python output:
 \begin{lstlisting}[style=base]
-@5Please enter 'hello':no@
-@6Please enter 'hello':never@
-@7Please enter 'hello':hi?@
-@8Please enter 'hello':hello@
-@9>>>@
+@2Please enter 'hello':no@
+@3Please enter 'hello':never@
+@4Please enter 'hello':hi?@
+@5Please enter 'hello':hello@
+@6>>>@
 
 
 \end{lstlisting}
@@ -832,6 +825,35 @@ Python output:
 
 \frametitle{Exercises}
 \framesubtitle{Do them!}
+% \begin{figure}
+% \includegraphics[scale=0.3]{Ministry_of_Silly_walks_2012.jpg}
+% \end{figure}
+%  \vfill
+\begin{itemize}
+ \item  \href{www.codecademy.com}{\textbf{codecademy}.com} {\small (at least the first 8 lessons)}
+ \item \href{www.learnpythonthehardway.org/book}{\textbf{learnpythonthehardway}.org/book} {\small (main textbook)}
+ \item \textbf{StackExchange}: paste your error into Google
+\end{itemize}
+\vfill
+Optional:
+\begin{itemize}
+  \item \href{http://www.learnpython.org/}{\textbf{learnpython}.org/}  {\small (alternative excercises)}
+    \item \href{http://openbookproject.net/thinkcs/python/english2e/}{\textbf{openbookproject}.net/thinkcs/python/english2e} {\small (alternative textbook)}
+
+  \item  \href{http://www.codewars.com}{\textbf{codewars}.com} {\small (programming puzzles)}
+
+\end{itemize}
+
+
+% \centering Put your hand up if you need help!
+
+\end{frame}
+
+\begin{frame}
+
+
+\frametitle{Exercises}
+\framesubtitle{Do them!}
 \huge
 \begin{figure}
 \includegraphics[scale=0.3]{Ministry_of_Silly_walks_2012.jpg}
@@ -841,6 +863,33 @@ Python output:
 \centering Put your hand up if you need help!
 
 \end{frame}
+
+\begin{frame}
+
+
+\frametitle{Learning Outcomes}
+\framesubtitle{Important stuff}
+\begin{enumerate}
+  \item{What is \textbf{assignment}? \visible<2> {e.g., {\ttfamily   a == 6   } implies a is now 6 }}
+  
+  \item<3-> What \textbf{types of data} have we used so far? \visible<4> {e.g., Boolean}
+
+  \item<5->  Why and when do we \textbf{indent}? \visible<6>{e.g., conditional statements}
+  
+  \item<7-> What types of flow control have we used so far?  \visible<8>{e.g., if}
+  
+  \item<9-> When are conditional statements used? 
+  
+  \item<11-> When are for-loops used?
+  
+  \item<13-> When are while-loops used?
+  
+  
+
+\end{enumerate}
+
+\end{frame}
+
 
 
 

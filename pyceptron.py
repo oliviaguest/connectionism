@@ -179,7 +179,7 @@ class Network(object):
 
 
       
-  def Train(self, iterations = 10):
+  def Train_(self, iterations = 10):
        
         x = self.input_units 
         y = self.output_units
@@ -190,12 +190,15 @@ class Network(object):
         P = len(self.patterns)
 
         for t in range(iterations):
+              print 'Training cycle:', t
+              print  'input -> output error'
+              self.Graph()
               for p in range(P):
                         
                     #for i in range(N):    
                       #x[i] = self.patterns[p][i]
                       
-                    x[0:2] = self.patterns[p][:]  
+                    x[0:N] = self.patterns[p][:]  
                     
                     #y[0] = 0
                     #for i in range(N+1): 
@@ -217,9 +220,50 @@ class Network(object):
                     #print w
                     #print self.weights
                     print  x, '->',  y, error
+        self.Show_Graphs()
 
 
+  def Train(self, iterations = 10):
+        x = self.input_units 
+        y = self.output_units[0]
+        w = self.weights
+        h = self.learning_rate
+        d = self.targets
+        N = len(self.patterns[0])
+        P = len(self.patterns)
 
+        for t in range(iterations):
+              print 'Training cycle:', t
+              print  'input -> output error'
+              self.Graph()
+              for p in range(P):
+                        
+                    for i in range(N):    
+                      x[i] = self.patterns[p][i]
+                      
+                    #x[0:2] = self.patterns[p][:]  
+                    
+                    y = 0
+                    for i in range(N+1): 
+                      y += x[i] * w[i]
+                      
+                    #y = numpy.dot(x, w)
+
+                    y = f(y)
+                    
+                    #y = vf(y)
+                    
+                    error = d[p][0] - y
+                    #error = d[p] - y
+
+                    for i in range(N+1): 
+                      w[i] += h * error * x[i]
+                      
+                    #w += h * error * x
+                    #print w
+                    #print self.weights
+                    print  x, '->',  y, error
+        self.Show_Graphs()
              
   def Run(self):
     x = self.input_units 
@@ -247,40 +291,51 @@ class Network(object):
 
 
 Patterns = [
-         #colour, shape, taste
-         #red-yellow, big-small, sweet-sour
-         #[0.1, 0.0, 0.2], #loquat 
-         #[0.0, 0.2, 0.0], #lemon 
-         #[1.0, 0.5, 0.8], #red apple 
-         #[1.0, 0.0, 0.9], #strawberry 
-         [0.1, 0.0], #loquat 
-         [0.0, 0.2], #lemon 
-         [1.0, 0.5], #red apple 
-         [1.0, 0.0], #strawberry 
+         ##colour, shape, taste
+         ##red-yellow, sweet-sour
+         [0.1, 0.5], #loquat 
+         [0.0, 0.0], #lemon 
+         [1.0, 0.8], #red apple 
+         [1.0, 0.9], #strawberry 
+         #[0.1, 0.0], #loquat 
+         #[0.0, 0.2], #lemon 
+         #[1.0, 0.5], #red apple 
+         #[1.0, 0.0], #strawberry 
         ]
 
 Targets = [
            [1.0], #first target
-           [1.0], #targets indicate 
+           [0.0], #targets indicate 
            [0.0], #which class
-           [0.0], #a pattern         
+           [1.0], #a pattern         
           ] #belongs to           
                    
+          
+#Patterns = [ ## XOR ##
+          #[0.0, 0.0],
+          #[0.0, 1.0],
+          #[1.0, 0.0],
+          #[1.0, 1.0]
+          #]
 
+#Targets = [
+           #[0.0], #first target, corresponds to first pattern
+           #[1.0],
+           #[1.0],
+           #[0.0],
+         
+          #] 
 def Main():
   #below this line are things that will be run - above it are just declarations and definitions of classes, etc.
-  N = Network(Patterns, Targets)
+  N = Network(Patterns, Targets, learning_rate = 0.001)
 
   #N.Graph()
 
   #N.Train()
   #N.Graph()
   
-  for i in range(5):
-    print 'Training cycle:', i
-    N.Train(1)
-    N.Graph()
-  N.Show_Graphs()
+  N.Train(10)
+
   
   #N.Run()
 

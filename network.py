@@ -212,7 +212,6 @@ class Network(gtk.DrawingArea):
       
       if self.layers == 2:
         x = self.input_units 
-        h = self.hidden_units
         y = self.output_units
         w = self.weights
         d = self.targets
@@ -222,14 +221,30 @@ class Network(gtk.DrawingArea):
         p = pattern
         f = self.activation_function
         
-        for i in range(N):
-          x[i] = self.patterns[p][i]
-          y[0] = 0
-          for i in range(N+1):
-            y[0] += x[i] * w[i]
-          y[0] = f(y[0])
+        #for i in range(N):
+          #x[i] = self.patterns[p][i]
+          #y[0] = 0
+          #for i in range(N+1):
+            #y[0] += x[i] * w[i]
+          #y[0] = f(y[0])
+          
+        x[0:N] = self.patterns[p][:]  
+        
+        #y[0] = 0
+        #for i in range(N+1): 
+          #y[0] += x[i] * w[i]
+          
+        y = np.dot(x, w)
 
-          error = self.targets[p][0] - f(y[0])
+        #y[0] = f(y[0])
+        
+        y = f(y)
+        e = y - d[p]
+        self.output_units = y
+        print  x, '->',  self.output_units, e
+        
+
+
       elif self.layers == 3:
         #self.Draw()
         x = self.input_units 
@@ -247,7 +262,7 @@ class Network(gtk.DrawingArea):
             
         for i in range(N):    
           x[i] = self.patterns[p][i]
-          
+        self.input_units = x  
         #x[0:2] = self.patterns[p][:]  
         
         #y[0] = 0
@@ -262,11 +277,14 @@ class Network(gtk.DrawingArea):
         
         h = f(h)
         print "h", h
+        
         y = np.dot(h, w_h2o)
 
         #y[0] = f(y[0])
         
         y = f(y)
+        self.output_units = y
+        self.hidden_units = h
               
     def Perceptron(self, pattern = None):
       x = self.input_units 
@@ -297,6 +315,8 @@ class Network(gtk.DrawingArea):
       
       y = f(y)
       print "output unit in Train()", y
+      print  x, '->',  y, e
+
       print len(self.output_units)
       self.output_units = y
       #error = d[p][0] - y[0]
@@ -307,12 +327,12 @@ class Network(gtk.DrawingArea):
       #for i in range(N+1): 
         #w[i] += h * error * x[i]
       for j in range(len(y)):
-        y[j]= 0
+        #y[j]= 0
         for i in range(N+1): 
           w[i] += l * e[j] * x[i]
-      #print w
+      print w
       #print self.weights
-      print  x, '->',  y, e
+      print  x, '->',  y, e, l
       #time.sleep(1)
       
       
@@ -350,18 +370,19 @@ class Network(gtk.DrawingArea):
       print x
       print w_i2h
       h = np.dot(np.transpose(x), w_i2h)
-      print "h", f(h), "h'", h
       h = f(h)
-      
+
       y = np.dot(h, w_h2o)
 
       #y[0] = f(y[0])
-      print "y", f(y), "y'", y
+      #print "y", f(y), "y'", y
 
       y = f(y)
       
       #error = d[p][0] - y[0]
       e_o = t[p] - y
+      
+      print 'e_o', e_o
       #print 'weights', w_h2o
       #print 'delta weights', np.transpose(np.dot( w_h2o, f_prime(y)))
       
@@ -369,11 +390,26 @@ class Network(gtk.DrawingArea):
       
       e_h = np.dot(np.transpose(d_o), f_prime(h))
       d_h += np.dot(f_prime(h), w_i2h)
-      print "h", h, "h'", f_prime(h) 
-      print "y", y, "y'", f_prime(y)
-      print "output error", e_o
-      print "output deltas", d_o
-      print "hidden deltas", d_h
+      #h_prime = f_prime(h)
+      #for i in range(N+1):
+        #for j in range(H):
+
+          #print h_prime[j], w_i2h[i][j]
+          #d_h[j] += h_prime[j] * w_i2h[i][j]
+      
+      #print "h", h, "h'", f_prime(h) 
+      #print "y", y, "y'", f_prime(y)
+      #print "output error", e_o
+      #print "output deltas", d_o
+      #print "hidden deltas", d_h
+      
+      self.input_units = x
+      self.output_units = y
+      self.hidden_units = h 
+      self.hidden_errors = e_h
+      self.output_errors = e_o
+      self.output_deltas = d_o
+      self.hidden_deltas = d_h
 
       #for i in range(N+1): 
         #w[i] += h * error * x[i]
@@ -387,10 +423,16 @@ class Network(gtk.DrawingArea):
       w_h2o = self.weights_h2o
       d_o = self.output_deltas
       d_h = self.hidden_deltas
+      l = self.learning_rate
       
-      w_h2o += d_o
+      w_h2o += d_o * l
       
-      w_i2h += d_h
+      w_i2h += d_h * l
+      
+      self.weights_i2h = w_i2h
+      self.weights_h2o = w_h2o
+      self.output_deltas = 0
+      self.hidden_deltas = 0
       
       
     def Run(self):
@@ -592,6 +634,8 @@ class Network(gtk.DrawingArea):
 
         j += 1
         for i in range(self.output_width):
+          print self.output_units
+
           cr.set_source_rgb(1.0 - self.output_units[i], 1.0 - self.output_units[i], 1.0 - self.output_units[i])
           x = (width - self.output_width * (self.unit_width+1) - 20) / 2.0 + 10 + (i * (self.unit_width+1) )
           y = j * (self.unit_width+1)+ 10
