@@ -45,7 +45,7 @@ For all three of those you need to run a pip command like above.
 
 ###Mac Users
 
-I have a Mac and I still have no idea how to get PyGTK to work on it. If you know, please [tell me](olivia@oliviaguest.com). I have gone the lazy route and run PyGTK code off the server over ssh. 
+I have a Mac and I still have no idea how to get PyGTK to work on it. If you know, please [tell me](mailto:olivia@oliviaguest.com). I have gone the lazy route and run PyGTK code off the server over ssh. 
 
 ###Linux Users
 
