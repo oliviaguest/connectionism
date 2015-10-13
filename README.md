@@ -1,5 +1,8 @@
 #Block Practical: Connectionist Models and Cognitive Processes
 
+##Slides
+To be added soon.
+
 ##Reading Materials
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
 
