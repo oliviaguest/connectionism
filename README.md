@@ -3,7 +3,7 @@
 ##Course Materials
 ###1st Week
 - Code: [pyceptron.py](https://github.com/oliviaguest/connectionism/raw/master/pyceptron.py)
-- Slides: [Part 1: Intro to Programming](https://github.com/oliviaguest/connectionism/blob/master/slides/part_1_slides.pdf), [Part 2: Intro to Networks](https://github.com/oliviaguest/connectionism/raw/master/slides/part_2_slides.pdf)
+- Slides: [Part 1: Intro to Programming](https://github.com/oliviaguest/connectionism/raw/master/slides/part_1_slides.pdf), [Part 2: Intro to Networks](https://github.com/oliviaguest/connectionism/raw/master/slides/part_2_slides.pdf)
 - Exercises: [Pyceptron](https://github.com/oliviaguest/connectionism/raw/master/exercises/exercises.pdf)
 
 ##Reading Materials
