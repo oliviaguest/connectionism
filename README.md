@@ -3,6 +3,10 @@
 ##Slides
 To be added soon.
 
+##Code
+###1st Week
+[pyceptron.py](https://github.com/oliviaguest/connectionism/raw/master/pyceptron.py)
+
 ##Reading Materials
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
 
