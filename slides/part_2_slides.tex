@@ -797,16 +797,16 @@ same as always!
 \framesubtitle{Defining some patterns!}
 \begin{lstlisting}[style=base]
 @Patterns =@
-        @[#colour, shape, taste
-         @@#red-yellow, big-small, sweet-sour
-         @@[0.1, 0.0, 0.2], #loquat 
-         @@[0.0, 0.2, 0.0], #lemon 
-         @@[1.0, 0.5, 0.8], #red apple 
-         @@[1.0, 0.0, 0.9], #strawberry 
+        @[#colour, taste
+         @@#yellow-red, sour-sweet
+         @@[0.1, 0.5], #loquat 
+         @@[0.0, 0.0], #lemon 
+         @@[1.0, 0.8], #red apple 
+         @@[1.0, 0.9], #strawberry 
         @@]@
 
-@2Targets = [@
-           @2[1.0], #first target
+@2Targets = [ #1.0 = yellow fruit
+           @@2[1.0], #target for first pattern
            @@2[1.0], #targets indicate 
            @@2[0.0], #which class
            @@2[0.0], #a pattern         

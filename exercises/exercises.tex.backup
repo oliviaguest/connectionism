@@ -6,8 +6,14 @@
 \usepackage[all]{hypcap}
 \usepackage{default}
 \usepackage{graphicx}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{listings}
 
-
+\lstset{language=Python,% general command to set parameter(s)
+basicstyle =\small\ttfamily,          % print whole listing small
+showstringspaces=false,
+commentstyle=\ttfamily}
 
 \title{Pyceptron exercises}
 \author{Olivia Guest}
@@ -16,45 +22,79 @@
 \begin{document}
 \maketitle
 \section{Running a perceptron on paper}
-Yes, this can be done. 
-
 \begin{figure}[hb]
  \centering
  \includegraphics{../slides/fig/perceptron_empty.pdf}
  \caption{A perceptron that you can run on paper.}
  \label{fig:perceptron}
 \end{figure}
-\section{Playing around with the network}
-Firstly, let's have a go playing around, but hopefully not breaking, the network (see \autoref{fig:perceptron}). However, don't worry if you do break it, there is an infinite supply.
+Using the activation propagation \autoref{eq:propagate} as presented and applied in the handouts calculate the output of the perceptron in \autoref{fig:perceptron}:
+\begin{equation}
+\label{eq:propagate}
+y = f\left(  \sum_{j=1}^N x_j \times w_{ji} \right)
+\end{equation}
 
-So let's have a go at looking at the code that makes it learn. Go to the part that says \texttt{def Train(self):}. This function, as I probably already explained, does a bunch of things that essentially implement the two basic equations. The first equation is that for calculating the activation of the output unit(s): 
+Firstly, because this is just a practice run to help you understand how activations propagate randomly, choose some values for the weights and inputs (simple small numbers will make the arithmetic easier). Then, using the three inputs and the three connection weights you just picked, calculate the value of the single output unit. If you wish to calculate the so-called post-synaptic activation for the output unit you can use an activation function. A simple version of this function, denoted by $f$, is to change the output unit's value to $1.0$ if the total of all inputs to it is above $0$, otherwise set it to $0$. In other words:
+\begin{equation}
+\label{eq:f}
+  y = \left\{ 
+  \begin{array}{l l}
+    1 & \quad \text{if $ \sum_{j=1}^N x_j \times w_{ji} > 0$ }\\
+    0 & \quad \text{otherwise}\\
+  \end{array} \right.
+\end{equation}
+
+
+What does $f$ help the network do?
+
+
+\section{Playing around with the network}
+Now you will have a go playing around, but hopefully not breaking, the network depicted in \autoref{fig:perceptron_maths}. However, don't worry if you do break it, there is an infinite supply.
+
+\begin{figure}[hb]
+\centering
+\includegraphics{../slides/fig/perceptron_maths.pdf}
+\caption{A perceptron}
+\label{fig:perceptron_maths}
+\end{figure}
+
+So have a look at the code that makes it learn. Open the file called \texttt{pyceptron.py} and go to the part that says \texttt{def Train(self):}. This function, as I probably already explained, does a bunch of things that essentially implement the two basic equations. The first equation is that for calculating the activation of the output unit(s): 
 \begin{equation}
 y_j = f \left( \sum_1^N w_i \times x_i \right)
 \end{equation} 
-where $y_j$ is the (output) unit whose state we want to calculate, $N$ is the number of units on the previous layer, $w_{i}$ is the weight on the connection between $i$ and $j$, and $f$ is a function that the unit applies. In the code we can write that in many ways, just like you can say the same or similar things in natural language in a number of different ways. I decided on this:      \begin{verbatim}
+where $y_j$ is the (output) unit whose state we want to calculate, $N$ is the number of units on the previous layer, $w_{i}$ is the weight on the connection between $i$ and $j$, and $f$ is a function that the unit applies. In the code we can write that in many ways, just like you can say the same or similar things in natural language in a number of different ways. I decided on this:
+\begin{lstlisting}
+for i in range(N+1): 
+	y += x[i] * w[i]
+	
+y = f(y)
+\end{lstlisting}
+and hopefully you can guess what each variable is based on the equation. Find this snippet of code within the \texttt{Train} function. Using your own judgement, add some comments to explain what is going on, for example:
+\begin{lstlisting}
               for i in range(N+1): 
+              # loop through all the indices of input units
                       y += x[i] * w[i]
+                      # sum the product of each input unit x[i]
+                      # and weight w[i] and save it in output
+                      # unit y
                       
               y = f(y)
-\end{verbatim} and hopefully you can guess what each variable is based on the equation. Please ask for help if something is not making sense straight away.
+              # calculate the post-synaptic value for y
+\end{lstlisting}
+Ask for help if something is not making sense straight away.
 
 The second, and equally important equation, we need is the one that trains the weights:
 \begin{equation}
 \Delta w_i = \eta  ( d_j - y_j ) \times x_{i}
 \end{equation} 
 where $d$ is what we want $y$ to be given $x$, and $\eta$ is the learning rate. In other words $d$ is the target, $y$ is as before the output unit (or units), and $x$ are the unit units. As before, there are a number of different ways to say this in Python. Hopefully, my choice is a clear translation:
-\begin{verbatim}
+\begin{lstlisting}
                    error = d[p][0] - y
                    
                    for i in range(N+1): 
-                      w[i] += h * error * x[i]\end{verbatim} 
+                      w[i] += h * error * x[i]\end{lstlisting} 
 
-\begin{figure}[hb]
- \centering
- \includegraphics{../slides/fig/perceptron_maths.pdf}
- \caption{A perceptron}
- \label{fig:perceptron}
-\end{figure}
+
 
 Now that you have a slightly clearer idea (if not --- ask me or a demonstrator for clarification) of how the network works, have a go changing things to see what happens:
 
@@ -136,6 +176,8 @@ Input 1 & Input 2 & Output\\ \hline
 
 \subsection{Could the network buy me fruit?}
  Instead of only learning the outcomes of logival operators the network can try to clasify some fruit based on two of their features, colour and taste, into ones I do and ones I do not want to eat. Can the network learn which of the fruit in \autoref{tbl:fruit} I like?
+ 
+
 
 
 \begin{table}[ht]
@@ -156,6 +198,11 @@ Strawberry & 1.0 &  0.9 & 1.0 \\
 \ \\ Can the network classify the fruit based on my personal preferences?    Yes / No   
 \ \\
 
+ On line BLAH
+%  ##
+%  ##
+%  ##
+comment out where it produces graphs. What are the graphs depicting? 
 
 \ \\ Does changing the learning rate help?    Yes / No   
 \ \\
@@ -163,6 +210,8 @@ Strawberry & 1.0 &  0.9 & 1.0 \\
 
 \ \\ Does training for longer help?    Yes / No   
 \ \\
+
+
 
 \subsection{Xor}
 Things start to become interesting when we teach the network \textbf{xor}, also known as exclusive or. Like its namesake \textbf{or}, \textbf{xor} returns true when either one or the other inputs are true, \emph{but it does not} return true when both are true (compare \autoref{tbl:xor} with \autoref{tbl:or}).  

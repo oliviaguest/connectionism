@@ -59,17 +59,20 @@ Targets = [
            #[0.0],
          
           #] 
-
+          
+   
+     
+     
 def Main():
-  N = Network(Patterns, Targets)
-  N.Graph()
+  #below this line are things that will be run - above it are just declarations and definitions of classes, etc.
+  N = Network(Patterns, Targets, learning_rate = 0.001)
 
-  for i in range(5):
-	  print 'Training cycle:', i
-	  N.Train(1)
-	  N.Graph()
+  #N.Graph()
 
-  N.Show_Graphs()
+  #N.Train()
+  #N.Graph()
+  
+  N.Train(10)
   
 
 if __name__ == "__main__":
