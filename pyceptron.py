@@ -152,7 +152,7 @@ class Network(object):
                     y += x[i] * w[i]
                   y = f(y)
 
-                  error = d[p][0] - f(y)
+                  error = d[p][0] - y
 
                   print  'input -> output error'
                   print  x, '->',  y, ', ', error
