@@ -56,9 +56,8 @@ class Network(object):
     self.weights = numpy.random.normal(0.0, 0.001, len(self.input_units))
     self.errors = numpy.zeros(len(targets[0]))
     self.learning_rate = learning_rate
-    self.layers = 2
-    
-    #If set to True graphs representing the classification permformed by the network will be drawn
+
+    #If set to True graphs representing the classification performed by the network will be drawn
     self.graphs = graphs
   
   def Show_Graphs(self):
