@@ -116,15 +116,21 @@ Now try the following:
  \item What does \texttt{N.Run()} do? Try commenting it back in to see.
  \item \texttt{N.Run()} calls the function \texttt{def Run(self):} (below \texttt{Train}) --- can you tell now what it might do?
  \item Can you spot similarities (and differences) between \texttt{Run} and \texttt{Train}? Imagine if it was called something less informative than  \texttt{Run}, would you still be able to reverse-engineer it? Add comments to help you if you need to return to it.
- \item Change the graphs parameter in the initialisation of the network \texttt{N} to \texttt{True}. What happens?
+ \item Change the \texttt{graphs} parameter in the initialisation of the network \texttt{N} to \texttt{True}. What happens?
  \item Is there something with respect to the actual running or training of the network that you do not understand? Try to use \texttt{print} to see what is going on in such a case.
 \end{enumerate}
 
 
-With respect to the graphs, they represent what the network knows about the inputs. Inputs that are classed as 1.0 (their target is 1.0) are represented with one colour and inputs in the other class are coloured with another. The line that moves around during training is a function of the weights and shows how the network is separating the data into two groups (i.e., $y$ is either 1.0 or 0.0).
-\\ \
-\\ \
+With respect to the graphs, they represent what the network knows about the inputs. Inputs that are classed as 1.0 (their target is 1.0) are represented with one colour and inputs in the other class are coloured with another. The line that moves around during training is a function of the weights and shows how the network is separating the data into two groups (i.e., $y$ is either 1.0 or 0.0). In other words, the graph depicts that training set as points in a two dimenstional space and the line depicts the weights. If the training set can be linearly separated, i.e., if the line can dissect the input patterns into two classes that reflect the targets then the network has represented the training set correctly.
+\ \\ 
+\ \\ 
+What do the x and y axes represent in the graph? Compare the points' coordinates with the values of the input patterns.
+\ \\ 
+\ \\ 
 Based on these graphs can you tell when the network has learned?
+\ \\ 
+\ \\
+Is the concept of linear separation useful to keep? If you think so, keep the \texttt{graphs} set to \texttt{True} for the next section of coding.
 
 
 \section{Teaching the network logic}
@@ -137,7 +143,7 @@ Even though logical operators might seem very abstract, saying things like ``tru
 The first logical operator you will teach your perceptron is the \textbf{not} operation. This requires one input unit and one output unit because negation (a synonym for not) is applied to one variable (or in our case input unit) at a time. So when you give the network a 0 you want it to return a 1, and when you give the network a 1 you need a 0 on the output. That means our training patterns are 0 and 1, and our targets are 1 and 0, in that order. \autoref{tbl:not} represents our patterns and their required targets. 
 %modify this section to say where in the code you need to edit stuff
 
-\begin{table}[hb]
+\begin{table}[htb]
  \centering
  \begin{tabular}[t]{cc}
 Input & Output\\ \hline
@@ -149,16 +155,20 @@ Input & Output\\ \hline
 
 Once you have made the required changes, run the network to see what happens and how long it takes to train. 
 
-\ \\ Can the network learn \textbf{not}?    Yes / No                                               
+\ \\ Can the network learn \textbf{not}?    Yes / No           
+
+\ \\ Is \textbf{not} linearly seperable? Yes / No
                                                      
 
 \subsection{And}
 
-Now let's teach it something a little more complex, the most basic form of logical \textbf{and} is that with two inputs (e.g., false \textbf{and} true is false) and it always has one output. Meaning that the network needs to learn the input-output mapping given in \autoref{tbl:and}. By looking at \autoref{tbl:and}, you might notice that now there are three units, two input units and the same number of output units as before. So you need to modify the network to have two input units, leaving the single output unit untouched. Thankfully, the code can figure out the number of input and output units required based on the patterns and targets you give it. This is because when I wrote the code I made no assumptions about the number of input units.
+Now let's teach it something a little more complex, the most basic form of logical \textbf{and} is that with two inputs (e.g., false \textbf{and} true is false) and it always has one output. Meaning that the network needs to learn the input-output mapping given in \autoref{tbl:and}. By looking at \autoref{tbl:and}, you might notice that now there are three units, two input units and the same number of output units as before. So you need to modify the network to have two input units, leaving the single output unit untouched. Thankfully, the code can figure out the number of input and output units required based on the patterns and targets you give it. This is because when I wrote the code I made no assumptions about the number of input units. I did however make a strong assumption that there is only a single output unit (i.e., the targets are always one value long), to keep the code a little simpler. 
 % This is something I wrote myself, if you want to see how that is done feel free to play around with the , but do not get bogged down with understanding this  %modify this section to say where in the code you need to edit stuff
 Once the patterns and targets are set, run the network like before and see what happens.
 
 \ \\ Can the network learn \textbf{and}?    Yes / No                                             
+
+\ \\ Is \textbf{and} linearly seperable? Yes / No
 
 \begin{table}[ht]
  \centering
@@ -177,7 +187,9 @@ Input 1 & Input 2 & Output\\ \hline
 
 Now let's do the same for \textbf{or}. Logical \textbf{or} returns a 1, or true, if either input is on. In other words, it only returns 0 when neither are 1, as shown in \autoref{tbl:or}. Remember that at any point you can check what any logical operator does directly in the Python shell, e.g., by typing \texttt{False or True}, Python will say \texttt{True} (corresponding to the 3rd line of \autoref{tbl:or}).
 
-\ \\ Can the network learn \textbf{or}?    Yes / No                                             
+\ \\ Can the network learn \textbf{or}?    Yes / No         
+
+\ \\ Is \textbf{or} linearly seperable? Yes / No                                    
 
 \begin{table}[ht]
  \centering
@@ -214,17 +226,13 @@ Strawberry & 1.0 &  0.9 & 1.0 \\
 
 
 \ \\ Can the network classify the fruit based on my personal preferences?    Yes / No   
-\ \\
 
 \ \\ Is it an easy classification for the network to learn? Yes / No
-\ \\
 
 \ \\ Does changing the learning rate help?    Yes / No   
-\ \\
-
 
 \ \\ Does training for longer help?    Yes / No   
-\ \\
+
 
 
 
@@ -249,21 +257,15 @@ Input 1 & Input 2 & Output\\ \hline
 
 
 \ \\ Can the network learn \textbf{xor}?    Yes / No   
-\ \\
 
 \ \\ Is it an easy classification for the network to learn? Yes / No
-\ \\
-
 
 \ \\ Does changing the learning rate help?    Yes / No   
-\ \\
-
 
 \ \\ Does training for longer help?    Yes / No   
-\ \\
 
 \ \\  Describe what is going on here.
-\ \\
+
 
 
 \end{document}

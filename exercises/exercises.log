@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  14 OCT 2015 01:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  14 OCT 2015 11:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -380,64 +380,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 87--89
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 124--128
-
- []
-
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 216--218
-
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 219--221
+Underfull \hbox (badness 10000) in paragraph at lines 124--134
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 222--224
+Underfull \hbox (badness 10000) in paragraph at lines 124--134
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 226--228
+Underfull \hbox (badness 10000) in paragraph at lines 124--134
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 251--253
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 254--256
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--260
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 262--264
-
- []
-
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 265--267
-
- []
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 269.
-[7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 269.
+[4] [5] [6]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 271.
+ [7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 271.
  (./exercises.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 269.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 269.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 271.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 271.
 Package rerunfilecheck Info: File `exercises.out' has not changed.
 (rerunfilecheck)             Checksum: 7144E6F588687FE14D064480129E2C2E;478.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 269.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 271.
  ) 
 Here is how much of TeX's memory you used:
  7161 strings out of 493315
@@ -446,7 +412,7 @@ Here is how much of TeX's memory you used:
  10499 multiletter control sequences out of 15000+600000
  10003 words of font info for 37 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 29i,12n,40p,786b,1686s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 29i,12n,40p,947b,1686s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -460,7 +426,7 @@ exlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
 xlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/tex
 live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texl
 ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on exercises.pdf (7 pages, 220462 bytes).
+Output written on exercises.pdf (7 pages, 222063 bytes).
 PDF statistics:
  208 PDF objects out of 1000 (max. 8388607)
  178 compressed objects within 2 object streams
