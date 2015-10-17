@@ -49,8 +49,8 @@ For all three of those you need to run a pip command like above.
 
 ###Mac Users
 
-I have a Mac and I still have no idea how to get PyGTK to work on it. If you know, please [tell me](mailto:olivia@oliviaguest.com). I have gone the lazy route and run PyGTK code off the server over ssh. 
+I finally managed to do this on my mac. Use [Homebrew](http://brew.sh/) to install matplotlib, numpy, scipy, pygtk.
 
 ###Linux Users
 
-You know what to do.
+Use your favourite package manager to install matplotlib, numpy, scipy, pygtk.
