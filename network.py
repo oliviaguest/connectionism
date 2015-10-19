@@ -1,4 +1,4 @@
-#! /usr/bin/network python
+# /usr/bin/network python
 import pygtk
 pygtk.require('2.0')
 import gtk, gobject, cairo, glib
@@ -9,12 +9,55 @@ import copy as cop
 import os
 import numpy as np
 import time
-import logic
+
 from scipy.special import expit, logit
 
-np.set_printoptions(precision=2)
+np.set_printoptions(precision=4)
        
+       
+Patterns = [ ## XOR ##
+          [0.0, 0.0],
+          [0.0, 1.0],
+          [1.0, 0.0],
+          [1.0, 1.0]
+          ]
 
+Targets = [
+           [0.0], #first target, corresponds to first pattern
+           [1.0],
+           [1.0],
+           [0.0],
+         
+          ]    
+
+
+          
+#Patterns = [ ## OR ##
+            #[0.0, 0.0],
+            #[0.0, 1.0],
+            #[1.0, 0.0],
+            #[1.0, 1.0]
+           #]
+
+#Targets = [
+           #[0.0], #first target, corresponds to first pattern
+           #[1.0],
+           #[1.0],
+           #[1.0],
+         
+          #]
+
+#Patterns = [ ## NOT ##
+            #[0.0],
+            #[1.0],
+           #]
+
+#Targets = [
+           #[1.0], #first target, corresponds to first pattern
+           #[0.0],
+         
+          #]
+          
 def Random(max_value, min_value = 0):
   "Random integer from min_value to max_value"
   return int(r.randint(min_value, max_value))
@@ -80,7 +123,7 @@ class Network(gtk.DrawingArea):
       
 
     
-    def __init__(self, width, height, patterns = None, targets = None, learning_rate = 0.005, unit_width = 10, hidden_width = None):
+    def __init__(self, width, height, patterns = None, targets = None, learning_rate = 0.1, unit_width = 10, hidden_width = None):
 
         super(Network,self).__init__()
         #global width
@@ -89,7 +132,7 @@ class Network(gtk.DrawingArea):
         self.height = height
         self.layers = self.height
         #*11 +10  #we do not want padding on the bottom due to the way packing is done
-        print width, height
+        #print width, height
         self.set_size_request(self.width*(unit_width+1) + 20 , self.height*(unit_width+1) + 20)
         self.tick = 0
         self.ticks = 0
@@ -107,26 +150,41 @@ class Network(gtk.DrawingArea):
         self.current_pattern = 0
 
         self.input_units =  np.zeros(len(patterns[0]))
-        self.input_units = np.append(self.input_units, 1)
+        #self.input_units = np.append(self.input_units, 1)
         self.output_units = np.zeros(len(targets[0]))
         self.output_errors = np.zeros(len(targets[0]))
+        self.output_biases = np.zeros(len(targets[0]))
+        self.deltas_output_biases = np.zeros_like(targets[0])
         
-
+        
+        self.error = 0
            
         self.tanh = np.tanh
-
+        self.tanh_inverse = lambda x: (1 - x) * (1 + x)
         self.tanh_deriv = lambda x: 1.0 - np.tanh(x)**2     
+        def tanh_inverse_(x):
+          return  (1 - x) * (1 + x)
+        self.tanh_inverse_ = tanh_inverse_
         
+        #self.activation_function = self.tanh
+        #self.inverse_activation_function = self.tanh_inverse
+        #self.inverse_activation_function_ = self.tanh_inverse_
         
-        self.activation_function = self.tanh
-        self.inverse_activation_function = self.tanh_deriv
+        #self.activation_function = expit
+        #self.inverse_activation_function = logit
+        #self.inverse_activation_function_ = logit
+
         
         if hidden_width and height == 3:
           self.hidden_width = hidden_width
           self.hidden_units = np.zeros(self.hidden_width)
-          self.hidden_units = np.append(self.hidden_units, 1)
+          #self.hidden_units = np.append(self.hidden_units, 1)
           self.hidden_errors = np.zeros(len(self.hidden_units))
-
+          self.hidden_biases = np.zeros_like(self.hidden_units)
+          self.deltas_hidden_biases = np.zeros_like(self.hidden_units)
+          self.prev_delta_hidden_biases = np.zeros_like(self.hidden_biases)
+          self.prev_delta_output_biases = np.zeros_like(self.output_biases)
+          self.momentum = 0.001
 
         else:
           self.hidden_width = 0
@@ -143,16 +201,18 @@ class Network(gtk.DrawingArea):
           self.weights_i2h = self.weights
           self.weights_h2o = np.random.normal(0.0, 0.0001, (len(self.hidden_units), len(self.output_units)))
           #print self.weights
-          self.output_deltas = np.zeros_like(self.weights_h2o)
-          self.hidden_deltas = np.zeros_like(self.weights_i2h)
+          self.deltas_h2o = np.zeros_like(self.weights_h2o)
+          self.deltas_i2h = np.zeros_like(self.weights_i2h)
+          self.prev_deltas_i2h = np.zeros_like(self.weights_i2h)
+          self.prev_deltas_h2o = np.zeros_like(self.weights_h2o)
         else:
           self.weights = np.random.normal(0.0, 0.0001, (len(self.input_units), len(self.output_units)))
-        print self.weights
+        #print self.weights
 
         self.errors = np.zeros(len(targets[0]))
         
         
-        print "height", self.height
+        #print "height", self.height
         
         def f(x):
           if x < 0.0:
@@ -160,10 +220,10 @@ class Network(gtk.DrawingArea):
           else:
             return 1.0
           
-        self.activation_function = np.vectorize(f) 
+        #self.activation_function = np.vectorize(f) 
 
 
-        self.input_width = len(self.input_units) - 1
+        self.input_width = len(self.input_units)
         self.output_width = len(self.output_units)
 
 
@@ -185,7 +245,26 @@ class Network(gtk.DrawingArea):
         #global offspring_created
         #offspring_created = 0
 
-          
+    def inverse_activation_function(self, x):
+      if x == 1:
+        x = 0.999999
+      elif x == 0:
+        x = 0.000001 
+        
+      #print 'logit', x, logit(x)
+
+      return logit(x)
+
+    def activation_function(self, x):
+      if x > 10:
+        x = 10
+      elif x < -10:
+        x = -10
+
+      #print 'expit', x, expit(x)
+  
+      return  (1.0 / (1.0 + np.exp(-x)))
+        
     def Pause(self):
       self.paused =  not self.paused
       
@@ -202,7 +281,7 @@ class Network(gtk.DrawingArea):
       self.Draw(cr, *self.window.get_size())
         
 
-    def _propagate(self, pattern = 0):
+    def _propagate(self, p):
       #output = self.input_layer.Run([1, 1])
       #print output
       #if self.hidden_layer:
@@ -218,7 +297,6 @@ class Network(gtk.DrawingArea):
         N = len(self.patterns[0])
         P = len(self.patterns)
         H = self.hidden_width
-        p = pattern
         f = self.activation_function
         
         #for i in range(N):
@@ -228,7 +306,7 @@ class Network(gtk.DrawingArea):
             #y[0] += x[i] * w[i]
           #y[0] = f(y[0])
           
-        x[0:N] = self.patterns[p][:]  
+        x = self.patterns[p]
         
         #y[0] = 0
         #for i in range(N+1): 
@@ -239,52 +317,44 @@ class Network(gtk.DrawingArea):
         #y[0] = f(y[0])
         
         y = f(y)
-        e = y - d[p]
         self.output_units = y
-        print  x, '->',  self.output_units, e
+        #print  x, '->',  self.output_units, e
+
         
 
 
       elif self.layers == 3:
-        #self.Draw()
-        x = self.input_units 
-        h = self.hidden_units
-        y = self.output_units
-        w_i2h = self.weights_i2h
-        w_h2o = self.weights_h2o
-        l = self.learning_rate
-        d = self.targets
+
         N = len(self.patterns[0])
         P = len(self.patterns)
         H = self.hidden_width
-        p = pattern
+        M = len(self.targets[0])
         f = self.activation_function
-            
-        for i in range(N):    
-          x[i] = self.patterns[p][i]
-        self.input_units = x  
-        #x[0:2] = self.patterns[p][:]  
-        
-        #y[0] = 0
-        #for i in range(N+1): 
-          #y[0] += x[i] * w[i]
-        print '\n' 
-        print "x", x
-        print "input->hidden", w_i2h
-        print "pre h", h
 
-        h = np.dot(np.transpose(x), w_i2h)
-        
-        h = f(h)
-        print "h", h
-        
-        y = np.dot(h, w_h2o)
+        print 'pattern', p    
+          
+        self.input_units = self.patterns[p]
+        print 'x', self.input_units
+        #h = expit(np.dot(x,w_i2h))
+        #y = expit(np.dot(h,w_h2o))
+          
+        for i in range(H):
+          self.hidden_units[i] = self.hidden_biases[i]
+          for j in range(N):
+            self.hidden_units[i] += self.input_units[j] * self.weights_i2h[j][i]
+          self.hidden_units[i] = f(self.hidden_units[i])    
+        #h = np.dot(np.transpose(x), w_i2h)
+        #h = f(h)
+        for i in range(M):
+          self.output_units[i] = self.output_biases[i]
+          for j in range(H):
+            self.output_units[i] += self.hidden_units[j] * self.weights_h2o[j][i]
+          self.output_units[i] = f(self.output_units[i])
+          
+          
+        self.error = np.abs(self.targets[p] - self.output_units) 
+          
 
-        #y[0] = f(y[0])
-        
-        y = f(y)
-        self.output_units = y
-        self.hidden_units = h
               
     def Perceptron(self, pattern = None):
       x = self.input_units 
@@ -314,10 +384,10 @@ class Network(gtk.DrawingArea):
       #y[0] = np.dot(x, w)
       
       y = f(y)
-      print "output unit in Train()", y
-      print  x, '->',  y, e
+      #print "output unit in Train()", y
+      #print  x, '->',  y, e
 
-      print len(self.output_units)
+      #print len(self.output_units)
       self.output_units = y
       #error = d[p][0] - y[0]
       for j in range(len(y)):
@@ -330,87 +400,103 @@ class Network(gtk.DrawingArea):
         #y[j]= 0
         for i in range(N+1): 
           w[i] += l * e[j] * x[i]
-      print w
+      #print w
       #print self.weights
-      print  x, '->',  y, e, l
+      #print  x, '->',  y, e, l
       #time.sleep(1)
       
-      
+     
       
     def Backprop(self, pattern = None):
-      x = self.input_units 
-      h = self.hidden_units
-      y = self.output_units
-      w_i2h = self.weights_i2h
-      w_h2o = self.weights_h2o
-      e_h = self.hidden_errors
-      e_o = self.output_errors
-      d_o = self.output_deltas
-      d_h = self.hidden_deltas
-      l = self.learning_rate
-      t = self.targets
+      #x = self.input_units 
+      #h = self.hidden_units
+      #y = self.output_units
+      #b_y = self.output_biases
+      #b_h = self.hidden_biases
+      #w_i2h = self.weights_i2h
+      #w_h2o = self.weights_h2o
+      #d_h = self.hidden_errors
+      #d_o = self.output_errors
+      #d_h2o = self.deltas_h2o
+      #d_i2h = self.deltas_i2h
+
       N = len(self.patterns[0])
       P = len(self.patterns)
       H = self.hidden_width
+      M = len(self.targets[0])
       if pattern:
         p = pattern
       else: 
         p = self.current_pattern
+
       f = self.activation_function
-      f_prime  = self.inverse_activation_function
-          
-      for i in range(N):    
-        x[i] = self.patterns[p][i]
+
+      print 'pattern', p    
         
-      #x[0:2] = self.patterns[p][:]  
+      self.input_units = self.patterns[p]
       
-      #y[0] = 0
-      #for i in range(N+1): 
-        #y[0] += x[i] * w[i]
-      print x
-      print w_i2h
-      h = np.dot(np.transpose(x), w_i2h)
-      h = f(h)
+      #h = expit(np.dot(x,w_i2h))
+      #y = expit(np.dot(h,w_h2o))
+      self.hidden_units = self.hidden_biases
+      for i in range(H):
+        for j in range(N):
+          self.hidden_units[i] += self.input_units[j] * self.weights_i2h[j][i]
+        self.hidden_units[i] = f(self.hidden_units[i])    
+      #h = np.dot(np.transpose(x), w_i2h)
+      #h = f(h)
+      
+      self.output_units = self.output_biases
 
-      y = np.dot(h, w_h2o)
+      for i in range(M):
+        for j in range(H):
+          self.output_units[i] += self.hidden_units[j] * self.weights_h2o[j][i]
+        self.output_units[i] = f(self.output_units[i])
+        
+        
+      self.error = np.abs(self.targets[p] - self.output_units) 
+      print 'x', self.input_units  
+      for i in range(M):
+        #calculate output deltas, which are cross-entropy error 
+        self.output_errors[i] = self.output_units[i] - self.targets[p][i]
+        #d_o[i] = f_prime(y[i]) * (1.0 - f_prime(y[i])) * (t[p] - y[i])
+      for i in range(H):
+        for j in range(M):
+          self.deltas_h2o[i][j] += self.output_errors[j] * self.hidden_units[i]
+          
+      for i in range(M):
+        self.deltas_output_biases[i] += self.output_errors[i]
+        
+        
+      hidden_targets = np.zeros_like(self.hidden_errors)
+      for i in range(H):
+        for j in range(M):
+          hidden_targets[i] += self.output_errors[j] * self.weights_h2o[i][j]
+        #d_h[i] = (e_h[i] - h[i])
+        self.hidden_errors[i] = self.hidden_units[i]* (1.0 - self.hidden_units[i]) * hidden_targets[i]
 
-      #y[0] = f(y[0])
-      #print "y", f(y), "y'", y
+      for i in range(N):
+        for j in range(H):
+          self.deltas_i2h[i][j] += self.hidden_errors[j] * self.input_units[i]
+      
+      for i in range(H):
+        self.deltas_hidden_biases[i] += self.hidden_errors[i]
+      
+      
+      #self.weights_i2h = w_i2h
+      #self.weights_h2o = w_h2o
+      ##self.deltas_h2o = np.zeros_like(self.weights_h2o)
+      ##self.deltas_i2h = np.zeros_like(self.weights_i2h)
+      #self.input_units = x
+      #self.output_units = y
+      #self.hidden_units = h 
+      #self.hidden_errors = d_h
+      #self.output_errors = d_o
+      #self.deltas_h2o = d_h2o
+      #self.deltas_i2h = d_i2h
+      
+      print 'error', self.error
 
-      y = f(y)
-      
-      #error = d[p][0] - y[0]
-      e_o = t[p] - y
-      
-      print 'e_o', e_o
-      #print 'weights', w_h2o
-      #print 'delta weights', np.transpose(np.dot( w_h2o, f_prime(y)))
-      
-      d_o += np.dot(f_prime(y), e_o)
-      
-      e_h = np.dot(np.transpose(d_o), f_prime(h))
-      d_h += np.dot(f_prime(h), w_i2h)
-      #h_prime = f_prime(h)
-      #for i in range(N+1):
-        #for j in range(H):
-
-          #print h_prime[j], w_i2h[i][j]
-          #d_h[j] += h_prime[j] * w_i2h[i][j]
-      
-      #print "h", h, "h'", f_prime(h) 
-      #print "y", y, "y'", f_prime(y)
-      #print "output error", e_o
-      #print "output deltas", d_o
-      #print "hidden deltas", d_h
-      
-      self.input_units = x
-      self.output_units = y
-      self.hidden_units = h 
-      self.hidden_errors = e_h
-      self.output_errors = e_o
-      self.output_deltas = d_o
-      self.hidden_deltas = d_h
-
+ 
       #for i in range(N+1): 
         #w[i] += h * error * x[i]
         
@@ -418,21 +504,48 @@ class Network(gtk.DrawingArea):
       #print w
       #print self.weights
       #print  x, '->',  y, error
+      
+      
     def Apply_Deltas(self):
-      w_i2h = self.weights_i2h
-      w_h2o = self.weights_h2o
-      d_o = self.output_deltas
-      d_h = self.hidden_deltas
+     
       l = self.learning_rate
-      
-      w_h2o += d_o * l
-      
-      w_i2h += d_h * l
-      
-      self.weights_i2h = w_i2h
-      self.weights_h2o = w_h2o
-      self.output_deltas = 0
-      self.hidden_deltas = 0
+      N = len(self.patterns[0])
+      H = self.hidden_width
+      M = len(self.targets[0])
+      self.momentum = self.momentum + 0.0001
+      if self.momentum > 0.05:
+        self.momentum = 0.05
+      print 'momentum', self.momentum 
+
+
+      for i in range(N):
+        for j in range(H):
+          
+          self.weights_i2h[i][j] += self.momentum * self.prev_deltas_i2h[i][j] - l * self.deltas_i2h[i][j]
+          self.prev_deltas_i2h[i][j] = self.momentum * self.prev_deltas_i2h[i][j] - l * self.deltas_i2h[i][j]
+          
+      for i in range(H):
+        for j in range(M):
+          self.weights_h2o[i][j] += self.momentum * self.prev_deltas_h2o[i][j] - l * self.deltas_h2o[i][j]  
+          self.prev_deltas_h2o[i][j] = self.momentum * self.prev_deltas_h2o[i][j] - l * self.deltas_h2o[i][j]  
+          
+      for i in range(H):
+        self.hidden_biases[i] += self.momentum * self.prev_delta_hidden_biases[i] - l * self.deltas_hidden_biases[i]  
+        self.prev_delta_hidden_biases[i] = self.momentum * self.prev_delta_hidden_biases[i] - l * self.deltas_hidden_biases[i]  
+        
+      for i in range(M):
+        self.output_biases[i] += self.momentum * self.prev_delta_output_biases[i]  - l * self.deltas_output_biases[i]  
+        self.prev_delta_output_biases[i] = self.momentum * self.prev_delta_output_biases[i]  - l * self.deltas_output_biases[i]  
+      #if np.isinf(w_h2o).any() or np.isinf(w_i2h).any():
+        #exit()
+        
+      self.deltas_i2h = np.zeros_like(self.deltas_i2h)
+      self.deltas_h2o = np.zeros_like(self.deltas_h2o)
+      self.deltas_hidden_biases = np.zeros_like(self.deltas_hidden_biases)
+      self.deltas_output_biases = np.zeros_like(self.deltas_output_biases)
+
+
+      #print "deltas applied"
       
       
     def Run(self):
@@ -443,7 +556,7 @@ class Network(gtk.DrawingArea):
 
       #if self.ticks:
         #self.ticks = ticks
-      print "tick", self.tick, self.current_pattern, len(self.patterns)
+      #print "tick", self.tick, self.current_pattern, len(self.patterns)
 
       self.Propagate(self.current_pattern)
 
@@ -478,20 +591,23 @@ class Network(gtk.DrawingArea):
 
       #if self.ticks:
         #self.ticks = ticks
-      print "tick", self.tick, self.current_pattern, len(self.patterns)
+      print "tick", self.tick, 'pattern', self.current_pattern,'/',len(self.patterns)
 
       #self.Propagate(self.current_pattern)
       if self.layers == 2:
         self.Perceptron()
       elif self.layers == 3:
         self.Backprop()
-        
+        self.Apply_Deltas()
+
+  
       if self.current_pattern >= (len(self.patterns)-1):
         self.current_pattern = 0
         self.tick += 1
         
         if self.layers == 3:
-          self.Apply_Deltas()
+
+          None
         
       else: 
         self.current_pattern += 1
@@ -515,7 +631,7 @@ class Network(gtk.DrawingArea):
 
       #if self.ticks:
         #self.ticks = ticks
-      print "tick", self.tick, self.current_pattern, len(self.patterns)
+      #print "tick", self.tick, self.current_pattern, len(self.patterns)
 
       #self.Propagate(self.current_pattern)
       self.Train()
@@ -537,7 +653,7 @@ class Network(gtk.DrawingArea):
       else:
         return False
 
-    def Propagate(self, pattern = 0):
+    def Propagate(self, pattern):
       #print 'tick: %s /' % str(self.tick).zfill(len(str(self.ticks))),
       #print '%s' % str(self.ticks).zfill(len(str(self.ticks)))
 
@@ -550,7 +666,9 @@ class Network(gtk.DrawingArea):
       #if self.ticks:
         #self.ticks = ticks
       #print "tick", self.tick, self.current_pattern, len(self.patterns)
-
+      print 'pattern',  pattern
+      print 'self.targets', self.targets
+      print 'self.patterns', self.patterns
       #self.Propagate(self.current_pattern)
       self._propagate(pattern)
       
@@ -560,6 +678,7 @@ class Network(gtk.DrawingArea):
         
       #else: 
         #self.current_pattern += 1
+      print "error", self.error
 
       cr = self.window.cairo_create()
       cr.set_antialias(cairo.ANTIALIAS_NONE)
@@ -611,10 +730,10 @@ class Network(gtk.DrawingArea):
           
           cr.set_source_rgb(self.input_units[i], self.input_units[i], self.input_units[i])
           
-          (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(self.input_units[i])) 
+          (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(np.around(self.input_units[i], decimals=2))) 
           
           cr.move_to(self.unit_width/2.0 + x - text_width/2.0, self.unit_width/2.0 + y + text_height/2.0)
-          cr.show_text(str(self.input_units[i]))
+          cr.show_text(str(np.around(self.input_units[i], decimals=2)))
 
         if self.hidden_width:
           j += 1
@@ -627,14 +746,14 @@ class Network(gtk.DrawingArea):
             
             cr.set_source_rgb(self.hidden_units[i], self.hidden_units[i], self.hidden_units[i])
 
-            (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(self.hidden_units[i])) 
+            (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(np.around(self.hidden_units[i], decimals=2))) 
 
             cr.move_to(self.unit_width/2.0 + x - text_width/2.0, self.unit_width/2.0 + y + text_height/2.0)
-            cr.show_text(str(self.hidden_units[i]))
+            cr.show_text(str(np.around(self.hidden_units[i], decimals=2)))
 
         j += 1
         for i in range(self.output_width):
-          print self.output_units
+          #print self.output_units
 
           cr.set_source_rgb(1.0 - self.output_units[i], 1.0 - self.output_units[i], 1.0 - self.output_units[i])
           x = (width - self.output_width * (self.unit_width+1) - 20) / 2.0 + 10 + (i * (self.unit_width+1) )
@@ -644,25 +763,22 @@ class Network(gtk.DrawingArea):
           
           cr.set_source_rgb(self.output_units[i], self.output_units[i], self.output_units[i])
 
-          (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(self.output_units[i])) 
+          (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(np.around(self.output_units[i], decimals=2))) 
 
           cr.move_to(self.unit_width/2.0 + x - text_width/2.0, self.unit_width/2.0 + y + text_height/2.0)
-          cr.show_text(str(self.output_units[i]))
+          cr.show_text(str(np.around(self.output_units[i], decimals=2)))
 
 
     def Clamp(self, pattern):
-      x = self.input_units 
-      p = pattern
-      N = len(self.patterns[0])
-
-      for i in range(N):
-        x[i] = self.patterns[p][i]
+      self.input_units = self.patterns[pattern]
       self._draw()
       
+
+      
     def Reset(self, width, height, unit_width, patterns, targets, hidden_width):
-      print self.width, self.height
+      #print self.width, self.height
       self.__init__(width, height, unit_width = unit_width, patterns = patterns, targets = targets, hidden_width = hidden_width)
-      print self.width, self.height
+      #print self.width, self.height
 
       self.redraw_canvas()
       
@@ -731,11 +847,13 @@ class Model:
     
     def Clamp(self, widget=None, data=None):
       self.network.Clamp(self.pattern_spin_button.get_value_as_int())
-    
+      #self.network.Propagate(self.pattern_spin_button.get_value_as_int())
+    def Propagate(self, widget=None, data=None):
+      self.network.Propagate(self.pattern_spin_button.get_value_as_int())
     def Reset(self, widget=None, data=None):
       #[network, play, pause]
       #print 'combobox', self.layer_combobox.get_active_text()
-      print 'height', int(self.layer_combobox.get_active_text())
+      #print 'height', int(self.layer_combobox.get_active_text())
 
       self.network.Reset(width = self.width_spin_button.get_value_as_int(), height = int(self.layer_combobox.get_active_text()), unit_width = self.unit_width_spin_button.get_value_as_int(),
                              patterns = self.patterns, targets = self.targets, hidden_width = self.width_spin_button.get_value_as_int())
@@ -779,12 +897,13 @@ class Model:
       #window.connect("delete-event", Quit)
       #window.connect("destroy", Quit)
       self.window.set_title("Network")
-      self.window.set_default_size(0, 0) #this si to ensure the window is always the smallest it can be
+      self.window.set_default_size(0, 0) #this is to ensure the window is always the smallest it can be
       self.window.set_resizable(False)
       #window.set_border_width(10)
       
-      self.patterns = logic.Patterns
-      self.targets = logic.Targets
+      self.patterns = Patterns
+      self.targets = Targets
+      
 
       # Args are: homogeneous, spacing, expand, fill, padding
       homogeneous = False
@@ -830,7 +949,7 @@ class Model:
       self.width_spin_button.connect("value_changed", self.Reset)
       self.height_spin_button.connect("value_changed", self.Reset)
       self.unit_width_spin_button.connect("value_changed", self.Reset)
-      self.pattern_spin_button.connect("value_changed", self.Clamp)
+      self.pattern_spin_button.connect("value_changed", self.Propagate)
       self.layer_combobox.connect('changed', self.Reset)
       self.network = Network(width = self.width_spin_button.get_value_as_int(), height = int(self.layer_combobox.get_active_text()), unit_width = self.unit_width_spin_button.get_value_as_int(),
                              patterns = self.patterns, targets = self.targets, hidden_width = self.width_spin_button.get_value_as_int())
