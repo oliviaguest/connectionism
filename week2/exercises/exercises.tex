@@ -58,7 +58,7 @@ In \autoref{fig:logistic}, we can see a graphical depiction of what the sigmoid 
  \item What type of flow control statement is appropriate for calculating the $\sum$ in \autoref{eq:ff_eta}?
 
  
- \item Fill in the \texttt{Feedforward()} function to reflect any changes when compared to the 2-layer network. 
+ \item Fill in the \texttt{Feedforward()} function in the file \texttt{network\_missing.py} to reflect any changes when compared to the 2-layer network. 
  
  
  \item How can you check that your code is correct? Is it?  Hint: Use a very simple input (target is irrelevant because you are not training yet) and calculate yourself what a few of the states of the network should be using the above equations. Do they match up with the code you have written when you propagate the pattern? 
@@ -142,18 +142,23 @@ Once the network has been run forwards and backwards for an epoch, $\epsilon$, w
 % \label{eq:ff_delta_weight}
 % \Delta w_{ij} = \delta_j s_i
 % \end{equation}
-% for both the input-to-hidden and the hidden-to-output connection weights. The $\Delta w_{ij}$s are then applied to the current weights (at epoch $e$), to produce the new weights:
+% for both the input-to-hidden and the hidden-to-output connection weights. The $\Delta w_{ij}$s are then applied to the current weights (at epoch $\epsilon$), to produce the new weights:
 \begin{equation}
 \label{eq:ff_adjusting_weights}
-\Delta w_{ij}^{\epsilon} = \nu \Delta w_{ij}^{\epsilon-1} - \mu \delta_j s_i 
+%\Delta w_{ij}^{\epsilon} = \nu \Delta w_{ij}^{\epsilon-1} - \mu \delta_j s_i 
+w_{ij}^{\epsilon +1} = w_{ij}^{\epsilon} +  \nu \Delta w_{ij}^{\epsilon - 1}  - \mu \Delta w_{ij}^{\epsilon}
 \end{equation}
-taking into account the momentum, $\nu$, and the learning rate, $\mu$.
+taking into account the momentum, $\nu$, and the learning rate, $\mu$.  $\Delta w_{ij}^{\epsilon}$ is the proposed weight update, from \autoref{eq:delta_weights}, while $Delta w_{ij}^{\epsilon - 1}$  is the actual weight update applied last time! $Delta w_{ij}^{\epsilon - 1}$ is the change to the weights including learning rate and momentum from the previous epoch.
 
 \begin{enumerate}
 
-\item Apply the weight updates as in \autoref{eq:ff_adjusting_weights}. Fill in \texttt{Apply\_Deltas}. Think carefully about how you will keep track of the previous actual (not proposed) weight change $\Delta w_{ij}^{\epsilon-1}$. Remember that $\delta_i$s have been being accumulated, so they will need to be set to zero when you have applied them, in order for them to be ready to receive the new epoch's.
+\item Apply the weight updates as in \autoref{eq:ff_adjusting_weights}. Fill in \texttt{Apply\_Deltas()}. Think carefully about how you will keep track of the previous actual (not proposed) weight change $\Delta w_{ij}^{\epsilon-1}$. Remember that $\delta_i$s have been being accumulated, so they will need to be set to zero when you have applied them, in order for them to be ready to receive the new epoch's.
 
- 
+\item Now your network learns compare its performance on not with a 2-layer perceptron.
+
+\item Can it learn exclusive-or-like mappings?
+
+
  
  \end{enumerate}
 
