@@ -350,22 +350,22 @@ class Network(gtk.DrawingArea):
         print 'Output states:', self.output_units 
         print 'Output biases:', self.output_biases
         
-        #The first thing we need to do is set all out input units to the pattern we need to train on:
-        self.input_units = self.patterns[p]
-
-        #Then update the hidden units:
-        self.hidden_units = np.zeros_like(self.hidden_units)
-        for i in range(H):
-          for j in range(N):
-            self.hidden_units[i] += self.input_units[j] * self.weights_i2h[j][i]
-          self.hidden_units[i] = f(self.hidden_units[i] + self.hidden_biases[i])    
-        
-        #Then update the output units:
-        self.output_units = np.zeros_like(self.output_units)
-        for i in range(M):
-          for j in range(H):
-            self.output_units[i] += self.hidden_units[j] * self.weights_h2o[j][i]
-          self.output_units[i] = f(self.output_units[i] + self.output_biases[i])
+#         #The first thing we need to do is set all out input units to the pattern we need to train on:
+#         self.input_units = self.patterns[p]
+# 
+#         #Then update the hidden units:
+#         self.hidden_units = np.zeros_like(self.hidden_units)
+#         for i in range(H):
+#           for j in range(N):
+#             self.hidden_units[i] += #SOMETHING
+#           self.hidden_units[i] = #SOMETHING ELSE    
+#         
+#         #Then update the output units:
+#         self.output_units = np.zeros_like(self.output_units)
+#         for i in range(M):
+#           for j in range(H):
+#             self.output_units[i] += #SOMETHING
+#           self.output_units[i] = #SOMETHING ELSE   
         
         #Just out of curiosity you might want to run something like, when you have propagated all the way to the output units:
         self.error = np.abs(self.targets[p] - self.output_units) 
@@ -414,19 +414,7 @@ class Network(gtk.DrawingArea):
 
       
       ## Forwards phase ##
-      self.input_units = self.patterns[p]
-
-      self.hidden_units = np.zeros_like(self.hidden_units)
-      for i in range(H):
-        for j in range(N):
-          self.hidden_units[i] += self.input_units[j] * self.weights_i2h[j][i]
-        self.hidden_units[i] = f(self.hidden_units[i] + self.hidden_biases[i])    
-      
-      self.output_units = np.zeros_like(self.output_units)
-      for i in range(M):
-        for j in range(H):
-          self.output_units[i] += self.hidden_units[j] * self.weights_h2o[j][i]
-        self.output_units[i] = f(self.output_units[i] + self.output_biases[i])
+      #Should be identical to the previous function you wrote
 
       ## Backwards phase ##
       #During this phase you may use your own variables to save the output errors, hidden targets, etc.
@@ -436,29 +424,29 @@ class Network(gtk.DrawingArea):
       # Proposed weight updates for input to hidden: self.deltas_i2h[i][j], self.deltas_hidden_biases[i][j]
       #To their appropriate values, this will work to accumulated the proposed updates, aka deltas.
       
-      for i in range(M):
-        #calculate output deltas, which are cross-entropy error 
-        self.output_errors[i] = self.output_units[i] - self.targets[p][i]
-      for i in range(H):
-        for j in range(M):
-          self.deltas_h2o[i][j] += self.output_errors[j] * self.hidden_units[i]
-          
-      for i in range(M):
-        self.deltas_output_biases[i] += self.output_errors[i]
-        
-        
-      hidden_targets = np.zeros_like(self.hidden_errors)
-      for i in range(H):
-        for j in range(M):
-          hidden_targets[i] += self.output_errors[j] * self.weights_h2o[i][j]
-        self.hidden_errors[i] = self.hidden_units[i]* (1.0 - self.hidden_units[i]) * hidden_targets[i]
-
-      for i in range(N):
-        for j in range(H):
-          self.deltas_i2h[i][j] += self.hidden_errors[j] * self.input_units[i]
-      
-      for i in range(H):
-        self.deltas_hidden_biases[i] += self.hidden_errors[i]
+#       for i in range(M):
+#         #calculate output deltas, which are cross-entropy error 
+#         self.output_errors[i] = #Fill in
+#       for i in range(H):
+#         for j in range(M):
+#           self.deltas_h2o[i][j] +=  #Fill in
+#           
+#       for i in range(M):
+#         self.deltas_output_biases[i] +=  #Fill in
+#         
+#         
+#       hidden_targets = np.zeros_like(self.hidden_errors)
+#       for i in range(H):
+#         for j in range(M):
+#           hidden_targets[i] +=  #Fill in
+#         self.hidden_errors[i] =  #Fill in
+# 
+#       for i in range(N):
+#         for j in range(H):
+#           self.deltas_i2h[i][j] +=  #Fill in
+#       
+#       for i in range(H):
+#         self.deltas_hidden_biases[i] +=  #Fill in
       
       self.error = np.abs(self.targets[p] - self.output_units) 
 
@@ -478,24 +466,24 @@ class Network(gtk.DrawingArea):
       #print 'momentum', self.momentum 
 
 
-      for i in range(N):
-        for j in range(H):
+#       for i in range(N):
+#         for j in range(H):
           
-          self.weights_i2h[i][j] += self.momentum * self.prev_deltas_i2h[i][j] - l * self.deltas_i2h[i][j]
-          self.prev_deltas_i2h[i][j] = self.momentum * self.prev_deltas_i2h[i][j] - l * self.deltas_i2h[i][j]
+#           self.weights_i2h[i][j] +=  #Fill in
+#           self.prev_deltas_i2h[i][j] =  #Fill in
           
-      for i in range(H):
-        for j in range(M):
-          self.weights_h2o[i][j] += self.momentum * self.prev_deltas_h2o[i][j] - l * self.deltas_h2o[i][j]  
-          self.prev_deltas_h2o[i][j] = self.momentum * self.prev_deltas_h2o[i][j] - l * self.deltas_h2o[i][j]  
+#       for i in range(H):
+#         for j in range(M):
+#           self.weights_h2o[i][j] +=  #Fill in  
+#           self.prev_deltas_h2o[i][j] =  #Fill in 
           
-      for i in range(H):
-        self.hidden_biases[i] += self.momentum * self.prev_delta_hidden_biases[i] - l * self.deltas_hidden_biases[i]  
-        self.prev_delta_hidden_biases[i] = self.momentum * self.prev_delta_hidden_biases[i] - l * self.deltas_hidden_biases[i]  
+#       for i in range(H):
+#         self.hidden_biases[i] +=  #Fill in 
+#         self.prev_delta_hidden_biases[i] =  #Fill in 
         
-      for i in range(M):
-        self.output_biases[i] += self.momentum * self.prev_delta_output_biases[i]  - l * self.deltas_output_biases[i]  
-        self.prev_delta_output_biases[i] = self.momentum * self.prev_delta_output_biases[i]  - l * self.deltas_output_biases[i]  
+#       for i in range(M):
+#         self.output_biases[i] +=  #Fill in 
+#         self.prev_delta_output_biases[i] =  #Fill in 
         
       self.deltas_i2h = np.zeros_like(self.deltas_i2h)
       self.deltas_h2o = np.zeros_like(self.deltas_h2o)

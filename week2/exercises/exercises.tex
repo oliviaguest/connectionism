@@ -22,29 +22,32 @@ commentstyle=\ttfamily}
 \begin{document}
 \maketitle
 \section{Overview}
-Last week we ran and trained a 2-layer perceptron. For reasons that became obvious (i.e., if no linear separation of the target states can be accomplished) 2-layer perceptrons are not as useful as one might initially assume. For this reason, we must turn to adding a 3rd layer of units between the input and the output units. This as you might expect is called the hidden layer because they are neither input nor output units --- their activations are not directly in contact with the environment the network is in. Adding hidden units produces a 3-layer perceptron. As we shall see it can now be taught classification problems like exclusive-or which are not linearly separable.
+Last week we ran and trained a 2-layer perceptron. For reasons that became obvious (i.e., if no linear separation of the target states can be accomplished) 2-layer perceptrons are not as useful as one might initially assume. So we must turn to adding a 3rd layer of units between the input and the output units. This as you might expect is called the hidden layer because they are neither input nor output units --- their activations are not directly in contact with the environment the network is in. Adding hidden units produces a network called a 3-layer perceptron. As we shall see it can now be taught classification problems like exclusive-or which are not linearly separable.
 
 Backpropagation in a feedforward network works by running the network \textbf{forwards} (as we did with the 2-layer perceptron) and then running the network \textbf{backwards}. This second phase is required because we need to calculate targets not only for the output units but also for the hidden units. Their targets are calculated based on the output units' activations and the output targets. Using these hidden unit targets we can then calculate the error of the hidden units and subsequently update the weights from the input units to the hidden units, as well as being able to update the weights from the hidden units to the output units. In other words, running the network backwards allows us to calculate errors for every single unit (apart from those in the input layer, which have no targets).  The errors for every unit are then used to calculate the connection weight updates, thus adjusting our network to conform to the required output states given an input.
+
 
 \section{Forwards Phase: Propagation of Activations}
 During the feedforward phase, each unit, apart from the input units, receives activations from units in the previous layer. Thus, the input to each unit, $i$, is:
 \begin{equation}
 \label{eq:ff_eta}
- \eta_{i}= b_i + \sum_{j} s_jw_{ji}
+ \eta_{i}= \sum_{j} s_jw_{ji} + b_i
 \end{equation}
-where $b_i$ is the bias of unit $i$ ($b_i = -1$), and $s_j$ is the state of a unit $j$ that projects onto $i$.
+where $b_i$ is the bias of unit $i$, and $s_j$ is the state of a unit $j$ that projects onto $i$.
 % \cite{rumelhart86}.
 When unit $i$ receives input $\eta_{i}$, its state changes to:
 \begin{equation}
 \label{eq:logistic}
   s_i = \frac{1}{1 + e^{-\eta_{i}}}
 \end{equation}
-as usual by means of the \textbf{logistic function} (previously we called this simple $f$, when discussing the 2-layer perceptron). The logistic function is the activation function that is most commonly used with backpropagation, although $tanh(\eta_i)$ (the hyperbolic tangent function) is also common. 
+as usual by means of the \textbf{logistic function} (previously we called the activation function $f$, when discussing the 2-layer perceptron, and we did not use the logistic function). The logistic function is the activation function that is most commonly used with backpropagation, although $tanh(\eta_i)$ (the hyperbolic tangent function) is also common. 
 
 In \autoref{fig:logistic}, we can see a graphical depiction of what the sigmoid activation function, in this case a logistic curve. The values on the $x$ axis represent the values that $\eta_i$ (the pre-synaptic input to unit $i$) takes on, while the $y$ axis represents the output of the activation function that will be the state of the unit: $s_i$ (the post-synaptic state).
 
 \begin{enumerate}
  \item What does this function do to the pre-synaptic input $\eta_i$ (as calculated in \autoref{eq:ff_eta})?
+
+\item What does a high value of $b_i$ do to unit $i$'s post-synaptic state? What about a low bias? 
  
  \item How is this different to how we defined our activation function $f$ last week?
  
@@ -52,10 +55,13 @@ In \autoref{fig:logistic}, we can see a graphical depiction of what the sigmoid 
  
  \item What are the differences and similarities between running the 3-layer and the 2-layer perceptrons? 
  
- \item What type of flow control statement is appropriate for calculating the $\sum$ is \autoref{eq:ff_eta}?
+ \item What type of flow control statement is appropriate for calculating the $\sum$ in \autoref{eq:ff_eta}?
 
  
- \item Fill in the \texttt{Run()} function to reflect any changes when compared to the 2-layer network. Use the inbuilt function \texttt{expit()} for the logistic function.
+ \item Fill in the \texttt{Feedforward()} function to reflect any changes when compared to the 2-layer network. 
+ 
+ 
+ \item How can you check that your code is correct? Is it?  Hint: Use a very simple input (target is irrelevant because you are not training yet) and calculate yourself what a few of the states of the network should be using the above equations. Do they match up with the code you have written when you propagate the pattern? 
  
 \end{enumerate}
 
@@ -67,15 +73,19 @@ In \autoref{fig:logistic}, we can see a graphical depiction of what the sigmoid 
  \label{fig:logistic}
 \end{figure}
 
+
+
+
 \section{Backwards Phase: Propagation of Error Signal}
 \label{sub:backwards_phase}
 After the feedforward phase, the network is run in reserve in order to gather the weight adjustments. Unit $i$ sends the error signal:
 \begin{equation}
-  \delta_i = \eta_i (1 - \eta_i) (t_i - s_i)
+  \delta_i = s_i - t_i %self.output_units[i] - self.targets[p][i]
 \label{eq:bp_error}
 \end{equation}
-where $t_i$ is the target state. If $i$ is an output unit $t_i$ is the pre-set target pattern. Notice how the pre- and post-synaptic states of the unit are used to measure the error --- compare to how the output of the 2-layer perceptron was evaluated. This metric for calculating error is called cross-entropy error, other types (e.g., mean squared error) can also be used.
+where $t_i$ is the target state. If $i$ is an output unit $t_i$ is the pre-set target pattern. This metric for calculating error is called cross-entropy error, other types (e.g., mean squared error) can also be used.
 
+% Notice how the pre- and post-synaptic states of the unit are used to measure the error --- compare to how the output of the 2-layer perceptron was evaluated. 
 % \cite<using cross entropy, for rationale see:>{golik13}.
 However, if $i$ is a hidden unit, its target is:
 
@@ -83,12 +93,29 @@ However, if $i$ is a hidden unit, its target is:
 \label{eq:ff_targets}
   t_i = \sum_{j} \delta_j w_{ij} 
 \end{equation}
-meaning that the error signal $i$ emits is a function of the error signal emitted by the output units and the weights that connect them. 
+meaning that the target for hidden unit $i$ is a function of the error signal emitted by the output units and the weights that connect them. 
+
+Now that we know how to calculate the targets for both output and hidden units, we need to calculate their respective deltas. For the output unit the error is defined in \autoref{eq:bp_error}. For hidden units we use a slightly different way of calculating the error:
+
+\begin{equation}
+\label{eq:hidden_error}
+\delta_i = s_i (1 - s_i)  t_i
+\end{equation}
+
+Now we have both types of $\delta_i$s (the errors for the output and hidden units), we may calculate the \emph{proposed} changes to the weights:
+
+\begin{equation}
+\label{eq:delta_weights}
+\Delta w_{ij}= \sum_j \delta_j s_i
+\end{equation}
+
+
+These are merely suggestions to update the connection weights and do not represent the actual changes we will make, as we may decide to scale them by the learning rate, apply momentum, etc.
 
 \begin{enumerate}
- \item If the pre-synaptic activation of an output unit $i$ is $-6$ and its target $t_i$ is $1.0$, what error signal $d_i$ will it emit? (Use equations \ref{eq:ff_eta}, \ref{eq:logistic}, and \ref{eq:bp_error}.)
+ \item If the pre-synaptic activation of an output unit $i$ is $-6$ and its target $t_i$ is $1.0$, what error signal $\delta_i$ will it emit? (Use equations \ref{eq:ff_eta}, \ref{eq:logistic}, and \ref{eq:bp_error}.)
  
- \item What type of flow control statement is appropriate for calculating the $\sum$ is \autoref{eq:ff_targets}?
+ \item What type of flow control statement is appropriate for calculating the $\sum$ in \autoref{eq:ff_targets}?
  
  \item What type of data is $i$ and what type of data is $s_i$?
  
@@ -96,9 +123,13 @@ meaning that the error signal $i$ emits is a function of the error signal emitte
  
  \item Why is the backwards phase required?
  
- \item How many types of target $t_i$ are there and why?
+ \item How many types of target $t_i$ are there and how do we calculate them?
+
  
-  \item Fill in the \texttt{Backprop()} function to run the network backwards. Use the inbuilt function \texttt{logit()} for the inverse of the logistic function.
+ 
+  \item Fill in the \texttt{Backprop()} function to run the network backwards. Remeber to run it forwards first!  However, do not change the weights just yet. Merely accumulate the proposed changes to the weights by calculating \autoref{eq:delta_weights}. 
+
+ \item Check if your code is working correctly. Are the output errors correct, are the hidden targets correct, ...?
 
  
  
@@ -114,14 +145,18 @@ Once the network has been run forwards and backwards for an epoch, $\epsilon$, w
 % for both the input-to-hidden and the hidden-to-output connection weights. The $\Delta w_{ij}$s are then applied to the current weights (at epoch $e$), to produce the new weights:
 \begin{equation}
 \label{eq:ff_adjusting_weights}
-\Delta w_{ij}^{\epsilon} = - \mu \delta_j s_i + \nu \Delta w_{ij}^{\epsilon-1}
+\Delta w_{ij}^{\epsilon} = \nu \Delta w_{ij}^{\epsilon-1} - \mu \delta_j s_i 
 \end{equation}
-taking into account the momentum, $\nu = 0.9$, and the learning rate, $\mu = 0.025$
+taking into account the momentum, $\nu$, and the learning rate, $\mu$.
+
+\begin{enumerate}
+
+\item Apply the weight updates as in \autoref{eq:ff_adjusting_weights}. Fill in \texttt{Apply\_Deltas}. Think carefully about how you will keep track of the previous actual (not proposed) weight change $\Delta w_{ij}^{\epsilon-1}$. Remember that $\delta_i$s have been being accumulated, so they will need to be set to zero when you have applied them, in order for them to be ready to receive the new epoch's.
+
+ 
+ 
+ \end{enumerate}
 
 % \cite{attohokine99, hertz91}.
-% 
 
-
-\bibliographystyle{apacite}
-\bibliography{ref}
 \end{document}

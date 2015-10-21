@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"  standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+		"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg width="600" height="480" viewBox="0 0 600 480"
+ xmlns="http://www.w3.org/2000/svg"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+<desc>Produced by GNUPLOT 4.2 patchlevel 0 </desc>
+<defs>
+	<circle id='gpDot' r='1'/>
+	<path id='gpPt0' style='stroke-width:0.148' d='M-1,0 h2 M0,-1 v2'/>
+	<path id='gpPt1' style='stroke-width:0.148' d='M-1,-1 L1,1 M1,-1 L-1,1'/>
+	<path id='gpPt2' style='stroke-width:0.148' d='M-1,0 L1,0 M0,-1 L0,1 M-1,-1 L1,1 M-1,1 L1,-1'/>
+	<rect id='gpPt3' style='stroke-width:0.148' x='-1' y='-1' width='2' height='2'/>
+	<use xlink:href='#gpPt3' id='gpPt4' style='fill:currentColor; stroke:none'/>
+	<circle id='gpPt5' style='stroke-width:0.148' cx='0' cy='0' r='1'/>
+	<use xlink:href='#gpPt5' id='gpPt6' style='fill:currentColor; stroke:none'/>
+	<path id='gpPt7' style='stroke-width:0.148' d='M0,-1.33 L-1.33,0.67 L1.33,0.67 z'/>
+	<use xlink:href='#gpPt7' id='gpPt8' style='fill:currentColor; stroke:none'/>
+	<use xlink:href='#gpPt7' id='gpPt9' transform='rotate(180)'/>
+	<use xlink:href='#gpPt9' id='gpPt10' style='fill:currentColor; stroke:none'/>
+	<use xlink:href='#gpPt3' id='gpPt11' transform='rotate(45)'/>
+	<use xlink:href='#gpPt11' id='gpPt12' style='fill:currentColor; stroke:none'/>
+</defs>
+<g style="fill:none; color:white; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+</g>
+<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<path d='M63.9,410.6 L77.4,410.6 M561.3,410.6 L547.8,410.6 '></path>
+	<g transform="translate(51.3,417.3)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:end">
+		<text>&#x2212;6</text>
+	</g>
+	<path d='M63.9,348.9 L77.4,348.9 M561.3,348.9 L547.8,348.9 '></path>
+	<g transform="translate(51.3,355.6)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:end">
+		<text>&#x2212;4</text>
+	</g>
+	<path d='M63.9,287.3 L77.4,287.3 M561.3,287.3 L547.8,287.3 '></path>
+	<g transform="translate(51.3,294.0)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:end">
+		<text>&#x2212;2</text>
+	</g>
+	<path d='M63.9,225.6 L77.4,225.6 M561.3,225.6 L547.8,225.6 '></path>
+	<g transform="translate(51.3,232.3)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:end">
+		<text> 0</text>
+	</g>
+	<path d='M63.9,163.9 L77.4,163.9 M561.3,163.9 L547.8,163.9 '></path>
+	<g transform="translate(51.3,170.6)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:end">
+		<text> 2</text>
+	</g>
+	<path d='M63.9,102.3 L77.4,102.3 M561.3,102.3 L547.8,102.3 '></path>
+	<g transform="translate(51.3,109.0)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:end">
+		<text> 4</text>
+	</g>
+	<path d='M63.9,40.6 L77.4,40.6 M561.3,40.6 L547.8,40.6 '></path>
+	<g transform="translate(51.3,47.3)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:end">
+		<text> 6</text>
+	</g>
+	<path d='M63.9,426.0 L63.9,412.5 M63.9,25.2 L63.9,38.7 '></path>
+	<g transform="translate(63.9,459.7)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:middle">
+		<text> 0</text>
+	</g>
+	<path d='M146.8,426.0 L146.8,412.5 M146.8,25.2 L146.8,38.7 '></path>
+	<g transform="translate(146.8,459.7)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:middle">
+		<text> 0.2</text>
+	</g>
+	<path d='M229.7,426.0 L229.7,412.5 M229.7,25.2 L229.7,38.7 '></path>
+	<g transform="translate(229.7,459.7)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:middle">
+		<text> 0.4</text>
+	</g>
+	<path d='M312.6,426.0 L312.6,412.5 M312.6,25.2 L312.6,38.7 '></path>
+	<g transform="translate(312.6,459.7)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:middle">
+		<text> 0.6</text>
+	</g>
+	<path d='M395.5,426.0 L395.5,412.5 M395.5,25.2 L395.5,38.7 '></path>
+	<g transform="translate(395.5,459.7)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:middle">
+		<text> 0.8</text>
+	</g>
+	<path d='M478.4,426.0 L478.4,412.5 M478.4,25.2 L478.4,38.7 '></path>
+	<g transform="translate(478.4,459.7)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:middle">
+		<text> 1</text>
+	</g>
+	<path d='M561.3,426.0 L561.3,412.5 M561.3,25.2 L561.3,38.7 '></path>
+	<g transform="translate(561.3,459.7)" style="stroke:none; fill:black; font-family:Bitstream Vera Sans; font-size:18.00; text-anchor:middle">
+		<text> 1.2</text>
+	</g>
+</g>
+<g style="fill:none; color:gray; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<path d='M63.9,225.6 L561.3,225.6 M63.9,426.0 L63.9,25.2 '></path>
+</g>
+<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<path d='M63.9,25.2 L63.9,426.0 L561.3,426.0 L561.3,25.2 L63.9,25.2 Z '></path>
+	<g transform="translate(146.8,97.3)" style="stroke:none; fill:#bc1e47; font-family:Bitstream Vera Sans; font-size:22.00; text-anchor:start">
+		<text>global maximum</text>
+	</g>
+	<g transform="translate(228.4,376.3)" style="stroke:none; fill:#bc1e47; font-family:Bitstream Vera Sans; font-size:22.00; text-anchor:start">
+		<text>global minimum</text>
+	</g>
+	<g transform="translate(405.7,139.2)" style="stroke:none; fill:#0081cd; font-family:Bitstream Vera Sans; font-size:22.00; text-anchor:end">
+		<text>local maximum</text>
+	</g>
+	<g transform="translate(432.2,309.6)" style="stroke:none; fill:#0081cd; font-family:Bitstream Vera Sans; font-size:22.00; text-anchor:end">
+		<text>local minimum</text>
+	</g>
+	<!--g transform="translate(354.05,109.0)" style="stroke:none; fill:black; font-family:'NimbusRomNo9L', 'Nimbus Roman'; font-size:30.00; text-anchor:start">
+		<text>cos(3&#x03C0;<tspan style="font-style:italic">x</tspan>)/<tspan style="font-style:italic">x</tspan></text>
+		<text dy="1.2em">0.1 &#x2264; <tspan style="font-style:italic">x</tspan> &#x2264; 1.1</text>
+	</g-->
+	<g style = 'stroke:none; shape-rendering:crispEdges'>
+		<polygon fill = 'currentColor' points = '117.3,53.3 119.7,50.1 105.4,44.4 115.0,56.5 117.3,53.3 '/>
+	</g>
+	<path d='M117.3,53.3 L119.7,50.1 L105.4,44.4 L115.0,56.5 L117.3,53.3 M146.8,75.2 L117.3,53.3 '></path>
+	<g style = 'stroke:none; shape-rendering:crispEdges'>
+		<polygon fill = 'currentColor' points = '198.9,332.3 201.3,329.1 187.0,323.4 196.6,335.5 198.9,332.3 '/>
+	</g>
+	<path d='M198.9,332.3 L201.3,329.1 L187.0,323.4 L196.6,335.5 L198.9,332.3 M228.4,354.2 L198.9,332.3 '></path>
+	<g style = 'stroke:none; shape-rendering:crispEdges'>
+		<polygon fill = 'currentColor' points = '321.2,169.9 318.8,173.1 333.1,178.8 323.6,166.7 321.2,169.9 '/>
+	</g>
+	<path d='M321.2,169.9 L318.8,173.1 L333.1,178.8 L323.6,166.7 L321.2,169.9 M291.7,147.9 L321.2,169.9 '></path>
+	<g style = 'stroke:none; shape-rendering:crispEdges'>
+		<polygon fill = 'currentColor' points = '461.7,265.5 464.1,268.7 473.7,256.6 459.3,262.3 461.7,265.5 '/>
+	</g>
+        <g style = 'stroke:none; shape-rendering:crispEdges'>
+          <polygon fill = 'currentColor' points = '509.2,229.9 506.8,233.1 521.1,238.8 511.6,226.7 509.2,229.9 '/>
+        </g>
+        <path d='M509.2,229.9 L506.8,233.1 L521.1,238.8 L511.6,226.7 L509.2,229.9 M399.7,147.9 L509.2,229.9 '></path>
+	<path d='M461.7,265.5 L464.1,268.7 L473.7,256.6 L459.3,262.3 L461.7,265.5 M432.2,287.4 L461.7,265.5 '></path>
+</g>
+<g style="fill:none; color:black; stroke:currentColor; stroke-width:3.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<path d='M105.4,44.4 L109.5,83.3 L113.7,116.8 L117.9,146.1 L122.1,171.8 L126.3,194.5 L130.5,214.6 L134.7,232.5 L138.8,248.3 L143.0,262.2
+		L147.2,274.4 L151.4,285.0 L155.6,294.1 L159.8,301.9 L164.0,308.3 L168.2,313.5 L172.3,317.5 L176.5,320.5 L180.7,322.4 L184.9,323.3
+		L189.1,323.3 L193.3,322.4 L197.5,320.8 L201.6,318.4 L205.8,315.3 L210.0,311.6 L214.2,307.4 L218.4,302.7 L222.6,297.5 L226.8,292.0
+		L231.0,286.2 L235.1,280.1 L239.3,273.8 L243.5,267.4 L247.7,260.9 L251.9,254.4 L256.1,247.9 L260.3,241.5 L264.5,235.3 L268.6,229.2
+		L272.8,223.3 L277.0,217.6 L281.2,212.3 L285.4,207.2 L289.6,202.6 L293.8,198.3 L297.9,194.4 L302.1,190.9 L306.3,187.8 L310.5,185.2
+		L314.7,183.0 L318.9,181.3 L323.1,180.0 L327.3,179.2 L331.4,178.8 L335.6,178.8 L339.8,179.3 L344.0,180.1 L348.2,181.4 L352.4,183.0
+		L356.6,184.9 L360.7,187.1 L364.9,189.7 L369.1,192.4 L373.3,195.4 L377.5,198.6 L381.7,202.0 L385.9,205.4 L390.1,209.0 L394.2,212.6
+		L398.4,216.2 L402.6,219.9 L406.8,223.5 L411.0,227.0 L415.2,230.4 L419.4,233.7 L423.6,236.9 L427.7,239.9 L431.9,242.7 L436.1,245.2
+		L440.3,247.6 L444.5,249.7 L448.7,251.5 L452.9,253.1 L457.0,254.3 L461.2,255.3 L465.4,256.1 L469.6,256.5 L473.8,256.6 L478.0,256.5
+		L482.2,256.0 L486.4,255.4 L490.5,254.4 L494.7,253.2 L498.9,251.8 L503.1,250.2 L507.3,248.4 L511.5,246.5 L515.7,244.3 L519.9,242.1
+		'></path>
+</g>
+<g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
+	<path d='M63.9,25.2 L63.9,426.0 L561.3,426.0 L561.3,25.2 L63.9,25.2 Z '></path>
+</g>
+</svg>
+

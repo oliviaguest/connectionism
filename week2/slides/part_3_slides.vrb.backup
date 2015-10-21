@@ -1,0 +1,43 @@
+\frametitle{3-layer Perceptron}
+\framesubtitle{Applying weight changes!}
+%  \begin{columns}[T]
+%     \begin{column}{.45\textwidth}
+
+
+
+
+\begin{itemize}
+
+
+
+ \item<1-> General equation for learning:
+
+ \ \\
+
+ \ \\
+
+\visible<2->{$w_{ij}^{\epsilon +1} =$} \visible<3->{$w_{ij}^{\epsilon}$} +  \nu \Delta w_{ij}^{\epsilon - 1} - \mu \Delta w_{ij}^{\epsilon}
+$$
+
+ \ \\
+
+ \ \\
+
+ \item where the momentum is $\nu$ and the learning rate is $\mu$
+\end{itemize}
+
+% \end{column}
+% \begin{column}{.55\textwidth}
+% \begin{figure}[t]
+%  \begin{flushleft}
+%
+%  \includegraphics[height = \figheight]{./fig/3-layer_maths.pdf}
+%
+% %   \includegraphics[height = \figheight]{./fig/perceptron_maths.pdf}
+%
+%  \end{flushleft}
+% %  \caption{Glosser.ca / CC-BY-SA-3.0}
+% \end{figure}
+% \end{column}
+%
+% \end{columns}
