@@ -106,7 +106,7 @@ Now we have both types of $\delta_i$s (the errors for the output and hidden unit
 
 \begin{equation}
 \label{eq:delta_weights}
-\Delta w_{ij}= \sum_j \delta_j s_i
+\Delta w_{ij}= \delta_j s_i
 \end{equation}
 
 
@@ -148,7 +148,7 @@ Once the network has been run forwards and backwards for an epoch, $\epsilon$, w
 %\Delta w_{ij}^{\epsilon} = \nu \Delta w_{ij}^{\epsilon-1} - \mu \delta_j s_i 
 w_{ij}^{\epsilon +1} = w_{ij}^{\epsilon} +  \nu \Delta w_{ij}^{\epsilon - 1}  - \mu \Delta w_{ij}^{\epsilon}
 \end{equation}
-taking into account the momentum, $\nu$, and the learning rate, $\mu$.  $\Delta w_{ij}^{\epsilon}$ is the proposed weight update, from \autoref{eq:delta_weights}, while $Delta w_{ij}^{\epsilon - 1}$  is the actual weight update applied last time! $Delta w_{ij}^{\epsilon - 1}$ is the change to the weights including learning rate and momentum from the previous epoch.
+taking into account the momentum, $\nu$, and the learning rate, $\mu$.  $\Delta w_{ij}^{\epsilon}$ is the proposed weight update, from \autoref{eq:delta_weights}, while $\Delta w_{ij}^{\epsilon - 1}$  is the actual weight update applied last time! $\Delta w_{ij}^{\epsilon - 1}$ is the change to the weights including learning rate and momentum from the previous epoch.
 
 \begin{enumerate}
 
