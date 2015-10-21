@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  21 OCT 2015 11:50
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  21 OCT 2015 13:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -350,82 +350,29 @@ LaTeX Info: Redefining \BHBI on input line 130.
 ) [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-
-LaTeX Warning: Reference `fig:logistic' on page 2 undefined on input line 45.
-
-
-LaTeX Warning: Reference `eq:ff_eta' on page 2 undefined on input line 48.
-
-
-LaTeX Warning: Reference `eq:logistic' on page 2 undefined on input line 54.
-
-
-LaTeX Warning: Reference `eq:ff_eta' on page 2 undefined on input line 58.
-
-<fig/Logistic-curve.pdf, id=23, 481.8pt x 321.2pt>
+<fig/Logistic-curve.pdf, id=41, 481.8pt x 321.2pt>
 File: fig/Logistic-curve.pdf Graphic file (type pdf)
 
 <use fig/Logistic-curve.pdf>
 Package pdftex.def Info: fig/Logistic-curve.pdf used on input line 71.
 (pdftex.def)             Requested size: 240.8994pt x 160.59961pt.
- [2 <./fig/Logistic-curve.pdf>]
+ [2 <./fig/Logistic-curve.pdf>] [3]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 166.
+ [4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 166.
 
-LaTeX Warning: Reference `eq:bp_error' on page 3 undefined on input line 98.
-
-
-LaTeX Warning: Reference `eq:ff_eta' on page 3 undefined on input line 116.
-
-
-LaTeX Warning: Reference `eq:logistic' on page 3 undefined on input line 116.
-
-
-LaTeX Warning: Reference `eq:bp_error' on page 3 undefined on input line 116.
-
-
-LaTeX Warning: Reference `eq:ff_targets' on page 3 undefined on input line 118.
-
-
-
-LaTeX Warning: Reference `eq:delta_weights' on page 3 undefined on input line 1
-30.
-
-[3]
-
-LaTeX Warning: Reference `eq:delta_weights' on page 4 undefined on input line 1
-51.
-
-
-LaTeX Warning: Reference `eq:ff_adjusting_weights' on page 4 undefined on input
- line 155.
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 167.
-[4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 167.
- (./exercises.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 167.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 167.
-
-
-Package rerunfilecheck Warning: File `exercises.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `exercises.out':
-(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
-(rerunfilecheck)             After:  C8D81AA258232C75B7048D8C86DD9E05;252.
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 167.
+(./exercises.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 166.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 166.
+Package rerunfilecheck Info: File `exercises.out' has not changed.
+(rerunfilecheck)             Checksum: C8D81AA258232C75B7048D8C86DD9E05;252.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 166.
  ) 
 Here is how much of TeX's memory you used:
- 7471 strings out of 493315
- 107723 string characters out of 6137904
+ 7475 strings out of 493315
+ 107762 string characters out of 6137904
  226294 words of memory out of 5000000
- 10824 multiletter control sequences out of 15000+600000
+ 10829 multiletter control sequences out of 15000+600000
  9230 words of font info for 34 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  29i,6n,40p,1006b,353s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -443,10 +390,10 @@ live/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texl
 ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texliv
 e/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive
 /2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on exercises.pdf (4 pages, 163933 bytes).
+Output written on exercises.pdf (4 pages, 164673 bytes).
 PDF statistics:
- 135 PDF objects out of 1000 (max. 8388607)
- 108 compressed objects within 2 object streams
- 36 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 159 PDF objects out of 1000 (max. 8388607)
+ 132 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
+ 38 words of extra memory for PDF output out of 10000 (max. 10000000)
 

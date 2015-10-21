@@ -154,9 +154,8 @@ taking into account the momentum, $\nu$, and the learning rate, $\mu$.  $\Delta 
 
 \item Apply the weight updates as in \autoref{eq:ff_adjusting_weights}. Fill in \texttt{Apply\_Deltas()}. Think carefully about how you will keep track of the previous actual (not proposed) weight change $\Delta w_{ij}^{\epsilon-1}$. Remember that $\delta_i$s have been being accumulated, so they will need to be set to zero when you have applied them, in order for them to be ready to receive the new epoch's.
 
-\item Now your network learns compare its performance on not with a 2-layer perceptron.
+\item Now  that your network learns, compare its performance on not with a 2-layer perceptron. Is ti faster or slower? What parameters play a role (learning rate, momentum, initial values of weights, etc.)? 
 
-\item Can it learn exclusive-or-like mappings?
 
 
  
