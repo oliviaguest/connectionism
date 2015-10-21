@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  21 OCT 2015 13:36
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.4.17)  21 OCT 2015 13:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1353,7 +1353,7 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <5> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 8.
 
-<./fig/perceptron_maths.pdf, id=42, 142.34756pt x 202.4226pt>
+<./fig/perceptron_maths.pdf, id=44, 142.34756pt x 202.4226pt>
 File: ./fig/perceptron_maths.pdf Graphic file (type pdf)
 
 <use ./fig/perceptron_maths.pdf>
@@ -1365,7 +1365,7 @@ Package pdftex.def Info: ./fig/perceptron_maths.pdf used on input line 24.
 \openout4 = `part_3_slides.vrb'.
 
 
-(./part_3_slides.vrb <./fig/3-layer.pdf, id=88, 236.92004pt x 272.32126pt>
+(./part_3_slides.vrb <./fig/3-layer.pdf, id=90, 236.92004pt x 272.32126pt>
 File: ./fig/3-layer.pdf Graphic file (type pdf)
 
 <use ./fig/3-layer.pdf>
@@ -1374,7 +1374,7 @@ Package pdftex.def Info: ./fig/3-layer.pdf used on input line 27.
 ) [3
 
  <./fig/3-layer.pdf>] (./part_3_slides.vrb
-<./fig/3-layer_maths.pdf, id=120, 236.92004pt x 272.32126pt>
+<./fig/3-layer_maths.pdf, id=124, 236.92004pt x 272.32126pt>
 File: ./fig/3-layer_maths.pdf Graphic file (type pdf)
 
 <use ./fig/3-layer_maths.pdf>
@@ -1522,7 +1522,7 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <7> not available
 \openout4 = `part_3_slides.vrb'.
 
  (./part_3_slides.vrb
-<fig/Single_layer_ann.pdf, id=724, 264.10648pt x 184.55266pt>
+<fig/Single_layer_ann.pdf, id=726, 264.10648pt x 184.55266pt>
 File: fig/Single_layer_ann.pdf Graphic file (type pdf)
 
 <use fig/Single_layer_ann.pdf>
@@ -1564,14 +1564,14 @@ Overfull \hbox (2.6568pt too wide) in paragraph at lines 28--30
 \openout4 = `part_3_slides.vrb'.
 
  (./part_3_slides.vrb
-<fig/Logistic-curve.pdf, id=809, 481.8pt x 321.2pt>
+<fig/Logistic-curve.pdf, id=811, 481.8pt x 321.2pt>
 File: fig/Logistic-curve.pdf Graphic file (type pdf)
 
 <use fig/Logistic-curve.pdf>
-Package pdftex.def Info: fig/Logistic-curve.pdf used on input line 31.
+Package pdftex.def Info: fig/Logistic-curve.pdf used on input line 33.
 (pdftex.def)             Requested size: 192.71658pt x 128.47772pt.
 
-Overfull \hbox (23.70622pt too wide) in paragraph at lines 31--33
+Overfull \hbox (23.70622pt too wide) in paragraph at lines 33--35
 []  
  []
 
@@ -1581,10 +1581,10 @@ Overfull \hbox (23.70622pt too wide) in paragraph at lines 31--33
 File: fig/Logistic-curve.pdf Graphic file (type pdf)
 
 <use fig/Logistic-curve.pdf>
-Package pdftex.def Info: fig/Logistic-curve.pdf used on input line 31.
+Package pdftex.def Info: fig/Logistic-curve.pdf used on input line 33.
 (pdftex.def)             Requested size: 192.71658pt x 128.47772pt.
 
-Overfull \hbox (23.70622pt too wide) in paragraph at lines 31--33
+Overfull \hbox (23.70622pt too wide) in paragraph at lines 33--35
 []  
  []
 
@@ -1593,14 +1593,26 @@ Overfull \hbox (23.70622pt too wide) in paragraph at lines 31--33
 ] (./part_3_slides.vrb
 File: fig/Logistic-curve.pdf Graphic file (type pdf)
  <use fig/Logistic-curve.pdf>
-Package pdftex.def Info: fig/Logistic-curve.pdf used on input line 31.
+Package pdftex.def Info: fig/Logistic-curve.pdf used on input line 33.
 (pdftex.def)             Requested size: 192.71658pt x 128.47772pt.
 
-Overfull \hbox (23.70622pt too wide) in paragraph at lines 31--33
+Overfull \hbox (23.70622pt too wide) in paragraph at lines 33--35
 []  
  []
 
 ) [32
+
+] (./part_3_slides.vrb
+File: fig/Logistic-curve.pdf Graphic file (type pdf)
+ <use fig/Logistic-curve.pdf>
+Package pdftex.def Info: fig/Logistic-curve.pdf used on input line 33.
+(pdftex.def)             Requested size: 192.71658pt x 128.47772pt.
+
+Overfull \hbox (23.70622pt too wide) in paragraph at lines 33--35
+[]  
+ []
+
+) [33
 
 ]
 \tf@nav=\write7
@@ -1612,11 +1624,11 @@ Overfull \hbox (23.70622pt too wide) in paragraph at lines 31--33
 \tf@snm=\write9
 \openout9 = `part_3_slides.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 471.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 471.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 473.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 473.
  (./part_3_slides.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 471.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 471.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 473.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 473.
 Package rerunfilecheck Info: File `part_3_slides.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
@@ -1624,13 +1636,13 @@ Package rerunfilecheck Info: File `part_3_slides.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 471.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 473.
  ) 
 Here is how much of TeX's memory you used:
- 26113 strings out of 493304
- 517823 string characters out of 6139871
- 549494 words of memory out of 5000000
- 28891 multiletter control sequences out of 15000+600000
+ 26144 strings out of 493304
+ 518085 string characters out of 6139871
+ 550494 words of memory out of 5000000
+ 28918 multiletter control sequences out of 15000+600000
  41247 words of font info for 108 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  49i,14n,53p,10426b,720s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1647,10 +1659,10 @@ s/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/urw/times/utmri8a.pfb>
-Output written on part_3_slides.pdf (32 pages, 340393 bytes).
+Output written on part_3_slides.pdf (33 pages, 343163 bytes).
 PDF statistics:
- 960 PDF objects out of 1000 (max. 8388607)
- 879 compressed objects within 9 object streams
- 65 named destinations out of 1000 (max. 500000)
+ 987 PDF objects out of 1000 (max. 8388607)
+ 904 compressed objects within 10 object streams
+ 67 named destinations out of 1000 (max. 500000)
  68 words of extra memory for PDF output out of 10000 (max. 10000000)
 
