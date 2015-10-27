@@ -34,7 +34,7 @@
 - [A Primer on Scientific Programming with Python](https://hplgit.github.io/scipro-primer/slides/index.html)
 - [Scipy Lecture Notes](http://www.scipy-lectures.org)
 - [The Glowing Python](http://glowingpython.blogspot.co.uk/): This blog has various examples of interesting code to play with and give you ideas for your own projects.
-- 
+
 ##Online Courses
 - [Machine Learning](https://www.coursera.org/learn/machine-learning/) by Andrew Ng
 - [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets) by Geoffrey Hinton
