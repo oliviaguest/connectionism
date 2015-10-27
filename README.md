@@ -28,6 +28,9 @@
 - [How to Think Like a Computer Scientist: Learning with Python](http://www.openbookproject.net/thinkcs/python/english2e/)
 - [Think Python: How to Think Like a Computer Scientist](http://www.greenteapress.com/thinkpython/)
 
+##Inspiration
+- [The Glowing Python](http://glowingpython.blogspot.co.uk/): This blog has various examples of interesting code to play with and give you ideas for your own projects.
+
 ##Online Courses
 - [Machine Learning](https://www.coursera.org/learn/machine-learning/) by Andrew Ng
 - [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets) by Geoffrey Hinton
