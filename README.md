@@ -1,20 +1,15 @@
 #Block Practical: Connectionist Models and Cognitive Processes
 
-
 ##Course Materials
 ###1st Week
 - Code: [pyceptron.py](https://github.com/oliviaguest/connectionism/raw/master/week1/pyceptron.py)
 - Slides: [Part 1: Intro to Programming](https://github.com/oliviaguest/connectionism/raw/master/week1/slides/part_1_slides.pdf), [Part 2: Intro to Networks](https://github.com/oliviaguest/connectionism/raw/master/week1/slides/part_2_slides.pdf)
 - Exercises: [Pyceptron](https://github.com/oliviaguest/connectionism/raw/master/week1/exercises/exercises.pdf)
 
-
-
 ###2nd Week
 - Code: [network_missing.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network_missing.py), [network_hints.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network_hints.py), [network.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network.py)
 - Slides: [Part 3: Feedfoward Networks](https://github.com/oliviaguest/connectionism/raw/master/week2/slides/part_3_slides.pdf)
 - Exercises: [Backpropagation](https://github.com/oliviaguest/connectionism/raw/master/week2/exercises/exercises.pdf)
-
-
 
 ###3rd Week
 - Code: [network.py](https://github.com/oliviaguest/connectionism/raw/master/week3/network.py)
@@ -22,14 +17,8 @@
 - Exercises: [Replication of Tyler et al. (2000)](https://github.com/oliviaguest/connectionism/raw/master/week3/exercises/exercises.pdf)
 - Tyler, L. K., Moss, H. E., Durrant-Peatfield, M. R., & Levy, J. P. (2000). **[Conceptual structure and the structure of concepts: A distributed account of category-specific deficits](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_2000.pdf)**. *Brain and language*, 75(2), 195-231.
 
-
-
 ##Reading Materials
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
-
-
-
-
 
 ##Programming
 ###Exercises
@@ -48,6 +37,7 @@
 - [Matplotlib Examples](http://matplotlib.org/1.4.0/examples/index.html)
 - [A Primer on Scientific Programming with Python](https://hplgit.github.io/scipro-primer/slides/index.html)
 - [Scipy Lecture Notes](http://www.scipy-lectures.org)
+
 ###Blogs
 - [The Glowing Python](http://glowingpython.blogspot.co.uk/): This blog has various examples of interesting code to play with and give you ideas for your own projects.
 - WildML: [Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs](http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/): This blog also has other Machine Learning tutorials.
@@ -58,11 +48,8 @@
 - [Introduction to Neural Networks](http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-641j-introduction-to-neural-networks-spring-2005/index.htm), by Sebastian Seung
 
 ##How to install Python
-
 ###Windows Users
-
 This is a little tricky:
-
 1. Install Python: [download from here](https://www.python.org/ftp/python/2.7.10/python-2.7.10.msi)
 
 2. Install matplotlib, numpy, and scipy using pip. Specifically you need to download the following from [here](http://www.lfd.uci.edu/~gohlke/pythonlibs/):
@@ -81,9 +68,7 @@ For all three of those you need to run a pip command like above.
 4. To check that everything works, open network.py and see if it runs without any errors.
 
 ###Mac Users
-
 I finally managed to do this on my mac. Use [Homebrew](http://brew.sh/) to install matplotlib, numpy, scipy, pygtk.
 
 ###Linux Users
-
 Use your favourite package manager to install matplotlib, numpy, scipy, pygtk.
