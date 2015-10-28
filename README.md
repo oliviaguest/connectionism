@@ -45,8 +45,9 @@
 - WildML: [Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs](http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/): This blog also has other Machine Learning tutorials.
 
 ##Online Courses
-- [Machine Learning](https://www.coursera.org/learn/machine-learning/) by Andrew Ng
-- [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets) by Geoffrey Hinton
+- [Machine Learning](https://www.coursera.org/learn/machine-learning/), by Andrew Ng
+- [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets), by Geoffrey Hinton
+- [Introduction to Neural Networks](http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-641j-introduction-to-neural-networks-spring-2005/index.htm), by Sebastian Seung
 
 ##Installing Python 
 
