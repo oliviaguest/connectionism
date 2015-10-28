@@ -16,7 +16,7 @@
 - Exercises: [Backpropagation](https://github.com/oliviaguest/connectionism/raw/master/week2/exercises/exercises.pdf)
 
 
-![A 3-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/fig/perceptron.svg "A 3-later perceptron")
+![A 3-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/fig/3-layer_maths.svg "A 3-later perceptron")
 
 ###3rd Week
 - Code: [network.py](https://github.com/oliviaguest/connectionism/raw/master/week3/network_missing.py)
@@ -24,6 +24,8 @@
 - Exercises: [Replication of Tyler et al. (2000)](https://github.com/oliviaguest/connectionism/raw/master/week3/exercises/exercises.pdf)
 - Tyler, L. K., Moss, H. E., Durrant-Peatfield, M. R., & Levy, J. P. (2000). **[Conceptual structure and the structure of concepts: A distributed account of category-specific deficits](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_2000.pdf)**. *Brain and language*, 75(2), 195-231.
 
+
+![Another 3-later perceptron](Colored_neural_network.svg "Another 3-later perceptron")
 
 ##Reading Materials
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
