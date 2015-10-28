@@ -9,6 +9,7 @@ import copy as cop
 import os
 import numpy as np
 import time
+import pickle
 
 from scipy.special import expit, logit
 
@@ -106,16 +107,6 @@ padding = 10
 
 #ticks = 1
 
-#Layer Globals
-living_cost = 0.3
-reproduction_energy = 10 #minmum energy value for reproducing
-mutation_probability = 5 #per cent
-mouth_size = 3 #amount of food that can be eaten in one go
-s = 1
-d = 0
-max_age = 500
-death_percent = 0#20
-PERCEPTION = 2
 
 # Create a GTK+ widget on which we will draw using Cairo
 class Network(gtk.DrawingArea):
@@ -126,7 +117,8 @@ class Network(gtk.DrawingArea):
       
 
     
-    def __init__(self, width, height, patterns = None, targets = None, learning_rate = 0.1, momentum = 0.0, unit_width = 5, hidden_width = None, weights_sd = 0.5):
+    def __init__(self, width, height, patterns = None, targets = None, learning_rate = 0.25, momentum = 0.1,
+                 unit_width = 5, hidden_width = None, weights_sd = 0.5):
 
         super(Network,self).__init__()
         #global width
@@ -197,6 +189,8 @@ class Network(gtk.DrawingArea):
         self.patterns = patterns
         self.targets = np.asarray(targets)
         self.learning_rate = learning_rate
+        self.rms = np.ones(len(self.patterns))
+
         
         if self.hidden_width:
           self.weights =  np.random.normal(0.0, weights_sd, (len(self.input_units), len(self.hidden_units)))
@@ -320,7 +314,7 @@ class Network(gtk.DrawingArea):
     def Feedforward(self, p):
         # This function receives a pattern, p, and trains on it.
             
-		# Here are some useful constants:
+        # Here are some useful constants:
         N = self.input_width #The number of input units
         H = self.hidden_width #The number of hidden units
         M = self.output_width #The number of output units
@@ -398,6 +392,7 @@ class Network(gtk.DrawingArea):
       f = self.activation_function
 
 
+      print 'learning rate', self.learning_rate
       
       ## Forwards phase ##
       self.input_units = self.patterns[p]
@@ -446,8 +441,11 @@ class Network(gtk.DrawingArea):
       for i in range(H):
         self.deltas_hidden_biases[i] += self.hidden_errors[i]
       
-      self.error = np.abs(self.targets[p] - self.output_units) 
-
+      #self.error = np.mean(np.abs(self.targets[p] - self.output_units))
+      #print 'pattern', p, 'error:', self.error
+      print np.sum((self.targets[p] - self.output_units)**2)
+      self.rms[p] = np.mean((self.targets[p] - self.output_units)**2)
+      print 'pattern:', p, 'rms:', self.rms[p]
       
       
     def Apply_Deltas(self):
@@ -463,6 +461,8 @@ class Network(gtk.DrawingArea):
       #  self.momentum = 0.05
       #print 'momentum', self.momentum 
 
+      print 'mean rms:', np.mean(self.rms)
+      
 
       for i in range(N):
         for j in range(H):
@@ -516,6 +516,10 @@ class Network(gtk.DrawingArea):
 
     def Train(self):
 
+##      if np.sum(self.rms) < 0.01:
+##        self.running = False
+##        return False  
+          
       if self.tick >= self.ticks:
         self.running = False
         return False
@@ -760,6 +764,52 @@ class Model:
     def destroy(self, widget=None, data=None):
         gtk.main_quit()
 
+    def save_weights(self, widget=None, data=None):
+        dialog = gtk.FileChooserDialog("Save..",
+                               None,
+                               gtk.FILE_CHOOSER_ACTION_SAVE,
+                               (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                gtk.STOCK_SAVE, gtk.RESPONSE_OK))
+        dialog.set_default_response(gtk.RESPONSE_OK)
+
+        filter = gtk.FileFilter()
+        filter.set_name("All files")
+        filter.add_pattern("*")
+        dialog.add_filter(filter)
+
+
+        response = dialog.run()
+        if response == gtk.RESPONSE_OK:
+            print dialog.get_filename(), 'selected'
+            pickle.dump([self.network.weights_i2h, self.network.weights_h2o], open( "test.pkl", "wb" ) )
+            
+        elif response == gtk.RESPONSE_CANCEL:
+            print 'Closed, no files selected'
+        dialog.destroy()
+        
+    def load_weights(self, widget=None, data=None):
+        dialog = gtk.FileChooserDialog("Open..",
+                               None,
+                               gtk.FILE_CHOOSER_ACTION_OPEN,
+                               (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                                gtk.STOCK_OPEN, gtk.RESPONSE_OK))
+        dialog.set_default_response(gtk.RESPONSE_OK)
+
+        filter = gtk.FileFilter()
+        filter.set_name("All files")
+        filter.add_pattern("*")
+        dialog.add_filter(filter)
+
+
+        response = dialog.run()
+        if response == gtk.RESPONSE_OK:
+            print dialog.get_filename(), 'selected'
+            self.network.weights_i2h, self.network.weights_h2o = pickle.load(open( dialog.get_filename(), "rb" ) )
+
+        elif response == gtk.RESPONSE_CANCEL:
+            print 'Closed, no files selected'
+        dialog.destroy()
+
     def __init__(self, patterns, targets):
       # create a new window
       self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -793,11 +843,10 @@ class Model:
       self.vbox = gtk.VBox(homogeneous, spacing)
       self.window.add(self.vbox)
 
-       # The value of value on the next line is the default number of epochs as provided by the GUI to the network
+      
       adjustment = gtk.Adjustment(value=1, lower=1, upper=100000000, step_incr=1000, page_incr=10000)
       self.iterations_spin_button = gtk.SpinButton(adjustment, climb_rate=0, digits=0)
-      # The value of value on the next line is the default width of the hidden units as provided by the GUI to the network
-      adjustment = gtk.Adjustment(value=2, lower=1, upper=100, step_incr=5, page_incr=5)
+      adjustment = gtk.Adjustment(value=20, lower=1, upper=100, step_incr=5, page_incr=5)
       self.width_spin_button = gtk.SpinButton(adjustment, climb_rate=0, digits=0)
       
       self.layer_combobox = gtk.combo_box_new_text()
@@ -890,11 +939,30 @@ class Model:
       label.show()
       self.hbox2.pack_start(label, expand, fill, padding)
       self.hbox2.pack_start(self.layer_combobox, expand, fill, 0)
+
       
       self.quit = gtk.Button("Quit")
       self.quit.connect("clicked", self.destroy, None)
       self.hbox2.pack_end(self.quit, expand, fill, padding)
       self.quit.show()
+
+      self.quit = gtk.Button("Load")
+      self.quit.connect("clicked", self.load_weights, None)
+      self.hbox2.pack_end(self.quit, expand, fill, padding)
+      self.quit.show()
+      
+      self.quit = gtk.Button("Save")
+      self.quit.connect("clicked", self.save_weights, None)
+      self.hbox2.pack_end(self.quit, expand, fill, padding)
+      self.quit.show()
+
+      
+
+
+
+
+
+      
       #print window.get_size()
       self.window.show()
       
