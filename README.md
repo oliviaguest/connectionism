@@ -60,8 +60,6 @@
 - [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets), by Geoffrey Hinton
 - [Introduction to Neural Networks](http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-641j-introduction-to-neural-networks-spring-2005/index.htm), by Sebastian Seung
 
-![A brain that looks like a python.](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/img/brain_snake_by_sixzero1985-d7aryqg.jpg)
-
 ##How to install Python
 
 ###Windows Users
