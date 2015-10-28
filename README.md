@@ -1,6 +1,6 @@
 #Block Practical: Connectionist Models and Cognitive Processes
 
-![A 2-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/week1/slides/fig/perceptron.svg "A 2-later perceptron")
+![A 2-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/fig/perceptron.svg "A 2-later perceptron")
 
 ##Course Materials
 ###1st Week
