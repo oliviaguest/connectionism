@@ -793,7 +793,7 @@ class Model:
       self.vbox = gtk.VBox(homogeneous, spacing)
       self.window.add(self.vbox)
 
-      
+       # The value of value on the next line is the default number of epochs as provided by the GUI to the network
       adjustment = gtk.Adjustment(value=1, lower=1, upper=100000000, step_incr=1000, page_incr=10000)
       self.iterations_spin_button = gtk.SpinButton(adjustment, climb_rate=0, digits=0)
       # The value of value on the next line is the default width of the hidden units as provided by the GUI to the network
