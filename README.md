@@ -1,5 +1,7 @@
 #Block Practical: Connectionist Models and Cognitive Processes
 
+![A 2-later perceptron](/week1/slides/fig/perceptron.svg?raw=true "A 2-later perceptron")
+
 ##Course Materials
 ###1st Week
 - Code: [pyceptron.py](https://github.com/oliviaguest/connectionism/raw/master/week1/pyceptron.py)
