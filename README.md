@@ -16,7 +16,7 @@
 - Patterns: [tyler_patterns.csv](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_patterns.csv)
 - Slides: [Part 4: Replicating a Model](https://github.com/oliviaguest/connectionism/raw/master/week3/slides/part_4_slides.pdf)
 - Exercises: [Replication of Tyler et al. (2000)](https://github.com/oliviaguest/connectionism/raw/master/week3/exercises/exercises.pdf)
-- Tyler, L. K., Moss, H. E., Durrant-Peatfield, M. R., & Levy, J. P. (2000). **[Conceptual structure and the structure of concepts: A distributed account of category-specific deficits](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_2000.pdf)**. *Brain and language*, 75(2), 195-231.
+- Tyler, L. K., Moss, H. E., Durrant-Peatfield, M. R., & Levy, J. P. (2000). **[Conceptual structure and the structure of concepts: A distributed account of category-specific deficits](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_2000.pdf)**. *Brain and Language*, 75(2), 195-231.
 
 ##Reading Materials
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
