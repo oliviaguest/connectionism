@@ -781,7 +781,7 @@ class Model:
         response = dialog.run()
         if response == gtk.RESPONSE_OK:
             print dialog.get_filename(), 'selected'
-            pickle.dump([self.network.weights_i2h, self.network.weights_h2o], open( "test.pkl", "wb" ) )
+            pickle.dump([self.network.weights_i2h, self.network.weights_h2o], open(dialog.get_filename(), "wb" ) )
             
         elif response == gtk.RESPONSE_CANCEL:
             print 'Closed, no files selected'
