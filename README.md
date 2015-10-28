@@ -1,6 +1,5 @@
 #Block Practical: Connectionist Models and Cognitive Processes
 
-![A 2-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/fig/perceptron.svg "A 2-later perceptron")
 
 ##Course Materials
 ###1st Week
@@ -23,6 +22,10 @@
 
 ##Reading Materials
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
+
+
+![A 2-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/fig/perceptron.svg "A 2-later perceptron")
+
 
 
 ##Programming
@@ -50,6 +53,8 @@
 - [Machine Learning](https://www.coursera.org/learn/machine-learning/), by Andrew Ng
 - [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets), by Geoffrey Hinton
 - [Introduction to Neural Networks](http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-641j-introduction-to-neural-networks-spring-2005/index.htm), by Sebastian Seung
+
+![](brain_snake_by_sixzero1985-d7aryqg.jpg)
 
 ##How to install Python
 
