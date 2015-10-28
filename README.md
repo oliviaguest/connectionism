@@ -35,11 +35,14 @@
 - [Think Python: How to Think Like a Computer Scientist](http://www.greenteapress.com/thinkpython/)
 
 ##Inspiration
+###Libraries
 - [Numpy Tutorial](http://www.python-course.eu/numpy.php)
 - [Matplotlib Examples](http://matplotlib.org/1.4.0/examples/index.html)
 - [A Primer on Scientific Programming with Python](https://hplgit.github.io/scipro-primer/slides/index.html)
 - [Scipy Lecture Notes](http://www.scipy-lectures.org)
+###Blogs
 - [The Glowing Python](http://glowingpython.blogspot.co.uk/): This blog has various examples of interesting code to play with and give you ideas for your own projects.
+- WildML: [Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs](http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/): This blog also has other Machine Learning tutorials.
 
 ##Online Courses
 - [Machine Learning](https://www.coursera.org/learn/machine-learning/) by Andrew Ng
