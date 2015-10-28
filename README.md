@@ -49,7 +49,7 @@
 - [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets), by Geoffrey Hinton
 - [Introduction to Neural Networks](http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-641j-introduction-to-neural-networks-spring-2005/index.htm), by Sebastian Seung
 
-##Installing Python 
+##How to install Python
 
 ###Windows Users
 
