@@ -233,23 +233,8 @@ class Network(gtk.DrawingArea):
         self.output_width = len(self.output_units)
 
 
-        
-        #self.layers = []
         self.units_per_layer = [2, 1, 1]
-        #for y in xrange(self.height):
-            #layer = Layer(y, self.units_per_layer[y], self, unit_width = self.unit_width, output_layer = (y+1 == len(self.units_per_layer)))
-            #self.layers.append(layer)
-        #self.input_layer = self.layers[0]
-        #if self.width == 2:
-          #self.output_layer = self.layers[1]
-          #self.hidden_layer = None
-        #elif self.width == 3:  
-          #self.hidden_layer = self.layers[1]
-          #self.output_layer = self.layers[2]
-        ##Debugging Globals
-        #global deaths
-        #global offspring_created
-        #offspring_created = 0
+
 
     def inverse_activation_function(self, x):
       if x == 1:
@@ -867,7 +852,7 @@ class Model:
       self.iterations_spin_button.show()  
       self.width_spin_button.show()
       self.height_spin_button.show()
-      #self.unit_width_spin_button.show()
+      self.unit_width_spin_button.show()
       self.pattern_spin_button.show()
       self.layer_combobox.show()
       
@@ -886,10 +871,10 @@ class Model:
       self.hbox.pack_start(label, expand, fill, padding)
       self.hbox.pack_start(self.width_spin_button, expand, fill, padding)
       
-      #label = gtk.Label("Unit size:") 
-      #label.show()
-      #self.hbox.pack_start(label, expand, fill, 0)
-      #self.hbox.pack_start(self.unit_width_spin_button, expand, fill, padding)
+      label = gtk.Label("Unit size:") 
+      label.show()
+      self.hbox.pack_start(label, expand, fill, 0)
+      self.hbox.pack_start(self.unit_width_spin_button, expand, fill, padding)
       
 
       
@@ -926,7 +911,7 @@ class Model:
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a Model instance and show it
 if __name__ == "__main__":
-    Patterns = np.genfromtxt('tyler_patterns.csv',delimiter=',',dtype=int,skip_header=1) # loading the labels for use in the figure
+    Patterns = np.genfromtxt('tyler_patterns.csv',delimiter=',',dtype=int,skip_header=1) 
     Targets = Patterns
     model = Model(Patterns, Targets)
     model.main()

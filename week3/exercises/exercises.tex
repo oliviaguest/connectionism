@@ -21,11 +21,59 @@ commentstyle=\ttfamily}
 
 \begin{document}
 \maketitle
-\section{Thinking about the Account}
-In order to replicate the model you must understand both the theory and the implementation details of the model. In other words, it is important to understand what the Tyler et al. (2000) account is --- what explanations, hypotheses, predictions, does their framework provide?
+\section{Replicating the Model}
+The focus of replication is the modelling account presented in the following journal article:
+\begin{quote}
+Tyler, L. K., Moss, H. E., Durrant-Peatfield, M. R., \& Levy, J. P. (2000). \textbf{Conceptual structure and the structure of concepts: A distributed account of category-specific deficits}. \textit{Brain and language}, 75(2), 195-231.
+\end{quote}
+In terms of the code you have written so far, it is relatively straightforward to replicate what Tyler et al. (2000) have done provided you can find the values for the implemetation parameters and other modelling properties of the network. \emph{Before} you attempt any changes to your code answer the following questions to help clarify what needs changing: 
+\begin{enumerate}
+
+\item Describe the input and target patterns. (Do not bother typing these in yourself, I will give them to you.)
+
+\item What learning algorithm is being used?
+
+ \item List the values and names of the parameters to do with learning (e.g., the learning rate).
+
+\item Decsribe the network architecture: how many, how wide, and what types of layers are used?
+
+\item How are the weights initialised?
+
+\item Consider the connectivity of the model: are there any recurrent connedctions?
+
+\item What type and size of epochs are used?
+
+ \item Are there any ambiguities in the description of the model?
+\end{enumerate}
+
+Now apply the above to your code. If you need a fresh copy of the network you can always download it again. If you need the patterns I have supplied them as a \texttt{.csv} file and you may open them using the following command:
+
+\begin{lstlisting}[language=Python]
+Patterns = np.genfromtxt('tyler_patterns.csv',
+                         delimiter=',',
+                         dtype=int,
+                         skip_header=1)
+\end{lstlisting}
+The only reason above that I changed line and did not list each of the arguments within the brackets on the same line is to be tidy on this document. In Python, you do not need to have any space between the arguments --- they can all be on the same line.
+
+When you have applied all of the above, answer the following:
+
+\begin{enumerate}
+
+\item Would the network still learn with minor or dramatic changes to any of the above?
+
+\item Whatever your answer above what would that imply for the model? What about for the theory more broadly?
+
+\item How do you know if your replication has worked for the "healthy" model?
+
+
+\end{enumerate}
+
+\section{Thinking about the Conceptual Structure Account}
+In order to successfuly replicate the model you must understand both the theory and the implementation details of the model. In other words, it is important to understand what the Tyler et al. (2000) account is --- what explanations, hypotheses, predictions, does their framework provide?
 
 Apart from training on the given patterns and evaluating its performance, which you are expected to do as part of this week's practical, it is important to be able to articulate what it is the model is and is not capturing.
-So while you read through the paper make sure to think about more cognitive, methodological, and theoretical, questions --- some of these can only be answered when you have implemented your version of the model:
+So while you (re)read  the paper make sure to think about more cognitive, methodological, and theoretical, questions:
 \begin{enumerate}
 
 
