@@ -25,7 +25,7 @@
 - Tyler, L. K., Moss, H. E., Durrant-Peatfield, M. R., & Levy, J. P. (2000). **[Conceptual structure and the structure of concepts: A distributed account of category-specific deficits](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_2000.pdf)**. *Brain and language*, 75(2), 195-231.
 
 
-![Another 3-later perceptron](Colored_neural_network.svg "Another 3-later perceptron")
+![Another 3-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/fig/Colored_neural_network.svg "Another 3-later perceptron")
 
 ##Reading Materials
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
@@ -60,7 +60,7 @@
 - [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets), by Geoffrey Hinton
 - [Introduction to Neural Networks](http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-641j-introduction-to-neural-networks-spring-2005/index.htm), by Sebastian Seung
 
-![A brain that looks like a python.](brain_snake_by_sixzero1985-d7aryqg.jpg)
+![A brain that looks like a python.](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/img/brain_snake_by_sixzero1985-d7aryqg.jpg)
 
 ##How to install Python
 
