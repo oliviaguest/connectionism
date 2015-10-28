@@ -8,10 +8,15 @@
 - Exercises: [Pyceptron](https://github.com/oliviaguest/connectionism/raw/master/week1/exercises/exercises.pdf)
 
 
+![A 2-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/fig/perceptron.svg "A 2-later perceptron")
+
 ###2nd Week
 - Code: [network_missing.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network_missing.py), [network_hints.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network_hints.py), [network.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network.py)
 - Slides: [Part 3: Feedfoward Networks](https://github.com/oliviaguest/connectionism/raw/master/week2/slides/part_3_slides.pdf)
 - Exercises: [Backpropagation](https://github.com/oliviaguest/connectionism/raw/master/week2/exercises/exercises.pdf)
+
+
+![A 3-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/fig/perceptron.svg "A 3-later perceptron")
 
 ###3rd Week
 - Code: [network.py](https://github.com/oliviaguest/connectionism/raw/master/week3/network_missing.py)
@@ -24,7 +29,6 @@
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
 
 
-![A 2-later perceptron](https://cdn.rawgit.com/oliviaguest/connectionism/master/week1/slides/fig/perceptron.svg "A 2-later perceptron")
 
 
 
@@ -54,7 +58,7 @@
 - [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets), by Geoffrey Hinton
 - [Introduction to Neural Networks](http://ocw.mit.edu/courses/brain-and-cognitive-sciences/9-641j-introduction-to-neural-networks-spring-2005/index.htm), by Sebastian Seung
 
-![](brain_snake_by_sixzero1985-d7aryqg.jpg)
+![A brain that looks like a python.](brain_snake_by_sixzero1985-d7aryqg.jpg)
 
 ##How to install Python
 
