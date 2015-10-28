@@ -29,6 +29,10 @@
 - [Think Python: How to Think Like a Computer Scientist](http://www.greenteapress.com/thinkpython/)
 
 ##Inspiration
+- [Numpy Tutorial](http://www.python-course.eu/numpy.php)
+- [Matplotlib Examples](http://matplotlib.org/1.4.0/examples/index.html)
+- [A Primer on Scientific Programming with Python](https://hplgit.github.io/scipro-primer/slides/index.html)
+- [Scipy Lecture Notes](http://www.scipy-lectures.org)
 - [The Glowing Python](http://glowingpython.blogspot.co.uk/): This blog has various examples of interesting code to play with and give you ideas for your own projects.
 
 ##Online Courses
