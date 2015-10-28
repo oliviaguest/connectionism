@@ -8,7 +8,7 @@
 
 
 ###2nd Week
-- Code: [network_missing.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network_missing.py)
+- Code: [network_missing.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network_missing.py), [network_hints.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network_hints.py), [network.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network.py)
 - Slides: [Part 3: Feedfoward Networks](https://github.com/oliviaguest/connectionism/raw/master/week2/slides/part_3_slides.pdf)
 - Exercises: [Backpropagation](https://github.com/oliviaguest/connectionism/raw/master/week2/exercises/exercises.pdf)
 
@@ -27,6 +27,9 @@
 - [Learn Python the Hard Way](http://learnpythonthehardway.org/book/)
 - [How to Think Like a Computer Scientist: Learning with Python](http://www.openbookproject.net/thinkcs/python/english2e/)
 - [Think Python: How to Think Like a Computer Scientist](http://www.greenteapress.com/thinkpython/)
+
+##Inspiration
+- [The Glowing Python](http://glowingpython.blogspot.co.uk/): This blog has various examples of interesting code to play with and give you ideas for your own projects.
 
 ##Online Courses
 - [Machine Learning](https://www.coursera.org/learn/machine-learning/) by Andrew Ng

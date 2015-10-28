@@ -126,7 +126,7 @@ class Network(gtk.DrawingArea):
       
 
     
-    def __init__(self, width, height, patterns = None, targets = None, learning_rate = 0.1, momentum = 0.0, unit_width = 10, hidden_width = None, weights_sd = 0.5):
+    def __init__(self, width, height, patterns = None, targets = None, learning_rate = 0.1, momentum = 0.0, unit_width = 5, hidden_width = None, weights_sd = 0.5):
 
         super(Network,self).__init__()
         #global width
@@ -135,6 +135,8 @@ class Network(gtk.DrawingArea):
         self.height = height
         self.layers = self.height
         #*11 +10  #we do not want padding on the bottom due to the way packing is done
+        self.unit_width = unit_width
+
         #print width, height
         self.set_size_request(self.width*(unit_width+1) + 20 , self.height*(unit_width+1) + 20)
         self.tick = 0
@@ -145,7 +147,6 @@ class Network(gtk.DrawingArea):
         #gobject.timeout_add(1000,self.draw_loop)
         self.paused = False
         self.running = False
-        self.unit_width = unit_width
         #self.max_population = self.height * self.width
         #self.initial_population = int(self.max_population/2.0)
         ##print self.window
@@ -638,12 +639,12 @@ class Network(gtk.DrawingArea):
           cr.rectangle(x, y, self.unit_width, self.unit_width)
           cr.fill()
           
-          cr.set_source_rgb(self.input_units[i], self.input_units[i], self.input_units[i])
+          cr.set_source_rgb(1, 0, 1)
           
-          (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(np.around(self.input_units[i], decimals=2))) 
+          (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(np.around(self.input_units[i], decimals=1))) 
           
           cr.move_to(self.unit_width/2.0 + x - text_width/2.0, self.unit_width/2.0 + y + text_height/2.0)
-          cr.show_text(str(np.around(self.input_units[i], decimals=2)))
+          cr.show_text(str(np.around(self.input_units[i], decimals=1)))
 
         if self.hidden_width:
           j += 1
@@ -654,12 +655,12 @@ class Network(gtk.DrawingArea):
             cr.rectangle(x, y, self.unit_width, self.unit_width)
             cr.fill()
             
-            cr.set_source_rgb(self.hidden_units[i], self.hidden_units[i], self.hidden_units[i])
+            cr.set_source_rgb(1, 0, 1)
 
-            (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(np.around(self.hidden_units[i], decimals=2))) 
+            (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(np.around(self.hidden_units[i], decimals=1))) 
 
             cr.move_to(self.unit_width/2.0 + x - text_width/2.0, self.unit_width/2.0 + y + text_height/2.0)
-            cr.show_text(str(np.around(self.hidden_units[i], decimals=2)))
+            cr.show_text(str(np.around(self.hidden_units[i], decimals=1)))
 
         j += 1
         for i in range(self.output_width):
@@ -670,12 +671,12 @@ class Network(gtk.DrawingArea):
           cr.rectangle(x, y, self.unit_width, self.unit_width)
           cr.fill()
           
-          cr.set_source_rgb(self.output_units[i], self.output_units[i], self.output_units[i])
+          cr.set_source_rgb(1, 0, 1)
 
-          (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(np.around(self.output_units[i], decimals=2))) 
+          (text_x, text_y, text_width, text_height, text_dx, text_dy) = cr.text_extents(str(np.around(self.output_units[i], decimals=1))) 
 
           cr.move_to(self.unit_width/2.0 + x - text_width/2.0, self.unit_width/2.0 + y + text_height/2.0)
-          cr.show_text(str(np.around(self.output_units[i], decimals=2)))
+          cr.show_text(str(np.around(self.output_units[i], decimals=1)))
 
 
     def Clamp(self, pattern):
@@ -774,7 +775,7 @@ class Model:
     def destroy(self, widget=None, data=None):
         gtk.main_quit()
 
-    def __init__(self):
+    def __init__(self, patterns, targets):
       # create a new window
       self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
       # When the window is given the "delete_event" signal (this is given
@@ -791,8 +792,8 @@ class Model:
       self.window.set_default_size(0, 0) #this is to ensure the window is always the smallest it can be
       self.window.set_resizable(False)
       
-      self.patterns = Patterns
-      self.targets = Targets
+      self.patterns = patterns
+      self.targets = targets
       
 
       # Args are: homogeneous, spacing, expand, fill, padding
@@ -820,7 +821,7 @@ class Model:
       
       adjustment = gtk.Adjustment(value=2, lower=1, upper=100, step_incr=5, page_incr=5)
       self.height_spin_button = gtk.SpinButton(adjustment, climb_rate=0, digits=0)
-      adjustment = gtk.Adjustment(value=100, lower=1, upper=100, step_incr=5, page_incr=5)
+      adjustment = gtk.Adjustment(value=20, lower=1, upper=100, step_incr=5, page_incr=5)
       self.unit_width_spin_button = gtk.SpinButton(adjustment, climb_rate=0, digits=0)
       
       adjustment = gtk.Adjustment(value=0, lower=0, upper=len(self.patterns)-1, step_incr=1, page_incr=1)
@@ -866,7 +867,7 @@ class Model:
       self.iterations_spin_button.show()  
       self.width_spin_button.show()
       self.height_spin_button.show()
-      self.unit_width_spin_button.show()
+      #self.unit_width_spin_button.show()
       self.pattern_spin_button.show()
       self.layer_combobox.show()
       
@@ -885,10 +886,10 @@ class Model:
       self.hbox.pack_start(label, expand, fill, padding)
       self.hbox.pack_start(self.width_spin_button, expand, fill, padding)
       
-#       label = gtk.Label("Unit size:") 
-#       label.show()
-#       self.hbox.pack_start(label, expand, fill, 0)
-#       self.hbox.pack_start(self.unit_width_spin_button, expand, fill, padding)
+      #label = gtk.Label("Unit size:") 
+      #label.show()
+      #self.hbox.pack_start(label, expand, fill, 0)
+      #self.hbox.pack_start(self.unit_width_spin_button, expand, fill, padding)
       
 
       
@@ -925,6 +926,8 @@ class Model:
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a Model instance and show it
 if __name__ == "__main__":
-    model = Model()
+    Patterns = np.genfromtxt('tyler_patterns.csv',delimiter=',',dtype=int,skip_header=1) # loading the labels for use in the figure
+    Targets = Patterns
+    model = Model(Patterns, Targets)
     model.main()
     
