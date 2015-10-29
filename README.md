@@ -1,22 +1,26 @@
 #Block Practical: Connectionist Models and Cognitive Processes
 
 ##Course Materials
-###1st Week
+###1st Week: Introduction to Programming and Connectionist Networks
 - Code: [pyceptron.py](https://github.com/oliviaguest/connectionism/raw/master/week1/pyceptron.py)
 - Slides: [Part 1: Intro to Programming](https://github.com/oliviaguest/connectionism/raw/master/week1/slides/part_1_slides.pdf), [Part 2: Intro to Networks](https://github.com/oliviaguest/connectionism/raw/master/week1/slides/part_2_slides.pdf)
 - Exercises: [Pyceptron](https://github.com/oliviaguest/connectionism/raw/master/week1/exercises/exercises.pdf)
 
-###2nd Week
+###2nd Week: Going from Two Network Layers to Three
 - Code: [network_missing.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network_missing.py), [network_hints.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network_hints.py), [network.py](https://github.com/oliviaguest/connectionism/raw/master/week2/network.py)
 - Slides: [Part 3: Feedfoward Networks](https://github.com/oliviaguest/connectionism/raw/master/week2/slides/part_3_slides.pdf)
 - Exercises: [Backpropagation](https://github.com/oliviaguest/connectionism/raw/master/week2/exercises/exercises.pdf)
 
-###3rd Week
+###3rd Week: Replicating a Model
 - Code: [network.py](https://github.com/oliviaguest/connectionism/raw/master/week3/network.py)
 - Patterns: [tyler_patterns.csv](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_patterns.csv)
 - Slides: [Part 4: Replicating a Model](https://github.com/oliviaguest/connectionism/raw/master/week3/slides/part_4_slides.pdf)
 - Exercises: [Replication of Tyler et al. (2000)](https://github.com/oliviaguest/connectionism/raw/master/week3/exercises/exercises.pdf)
 - Tyler, L. K., Moss, H. E., Durrant-Peatfield, M. R., & Levy, J. P. (2000). **[Conceptual structure and the structure of concepts: A distributed account of category-specific deficits](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_2000.pdf)**. *Brain and Language*, 75(2), 195-231.
+- 
+###4th Week: Writing up Experimental Results
+- Code: [graphs.py](https://github.com/oliviaguest/connectionism/raw/master/week4/graphs.py)
+- Slides: [Part 5: Writing a Lab Report](https://github.com/oliviaguest/connectionism/raw/master/week4/slides/part_5_slides.pdf)
 
 ##Reading Materials
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
