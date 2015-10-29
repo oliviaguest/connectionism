@@ -17,7 +17,7 @@
 - Slides: [Part 4: Replicating a Model](https://github.com/oliviaguest/connectionism/raw/master/week3/slides/part_4_slides.pdf)
 - Exercises: [Replication of Tyler et al. (2000)](https://github.com/oliviaguest/connectionism/raw/master/week3/exercises/exercises.pdf)
 - Tyler, L. K., Moss, H. E., Durrant-Peatfield, M. R., & Levy, J. P. (2000). **[Conceptual structure and the structure of concepts: A distributed account of category-specific deficits](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_2000.pdf)**. *Brain and Language*, 75(2), 195-231.
-- 
+
 ###4th Week: Writing up Experimental Results
 - Code: [graphs.py](https://github.com/oliviaguest/connectionism/raw/master/week4/graphs.py)
 - Slides: [Part 5: Writing a Lab Report](https://github.com/oliviaguest/connectionism/raw/master/week4/slides/part_5_slides.pdf)
