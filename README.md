@@ -47,6 +47,11 @@
 - [The Glowing Python](http://glowingpython.blogspot.co.uk/): This blog has various examples of interesting code to play with and give you ideas for your own projects.
 - WildML: [Recurrent Neural Networks Tutorial, Part 1 – Introduction to RNNs](http://www.wildml.com/2015/09/recurrent-neural-networks-tutorial-part-1-introduction-to-rnns/): This blog also has other Machine Learning tutorials.
 
+###Video Lectures
+- [Machine Learning](https://www.youtube.com/playlist?list=PLg7f-TkW11iX3JlGjgbM2s8E1jKSXUTsG)
+- [
+The Cognitive and Computational Neuroscience of Categorization, Novelty-Detection, and the Neural Representation of Similarity](https://www.youtube.com/watch?v=2Ei6wFJ9kCc)
+
 ##Online Courses
 - [Machine Learning](https://www.coursera.org/learn/machine-learning/), by Andrew Ng
 - [Neural Networks for Machine Learning](https://www.coursera.org/course/neuralnets), by Geoffrey Hinton
