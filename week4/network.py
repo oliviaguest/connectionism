@@ -965,9 +965,6 @@ class Model:
       self.hbox2.pack_end(self.save_outputs_button, expand, fill, padding)
       self.save_outputs_button.show()
 
-      self.hbox2.pack_end(self.quit, expand, fill, padding)
-      self.quit.show()
-
       
 
 
