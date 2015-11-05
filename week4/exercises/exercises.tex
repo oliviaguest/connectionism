@@ -1,0 +1,59 @@
+\documentclass[a4paper,10pt]{article}
+%\documentclass[a4paper,10pt]{scrartcl}
+\usepackage{hyperref}
+% \usepackage{caption}
+\hypersetup{pdfborder={0 0 0}}
+\usepackage[all]{hypcap}
+\usepackage{default}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage {apacite}
+\lstset{language=Python,% general command to set parameter(s)
+basicstyle =\small\ttfamily,          % print whole listing small
+showstringspaces=false,
+commentstyle=\ttfamily}
+
+\title{File Input/Output}
+\author{Dr. Olivia Guest}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Save Outputs}
+Download the slightly different version of \texttt{network.py}. Go to where it says
+\begin{lstlisting}[language=Python]
+self.save_outputs_button = gtk.Button("Save Outputs")
+self.save_outputs_button.connect("clicked", self.save_outputs, None)
+self.hbox2.pack_end(self.save_outputs_button, expand, fill, padding)
+self.save_outputs_button.show()
+\end{lstlisting}
+
+What this line is saying is equivalent to the lines above that are identical for saving the weights, but with a different function being connected to the button with label "Save Outputs". In other words, it is saying that when that button is pressed both these two functions will be called and both the weights, as we saw last time, and now the outputs will be saved to a file. Go to the function \texttt{save\_weights} and use that to help you write a \emph{new} function called \texttt{save\_outputs}. This function should save the outputs of the network \emph{for every pattern} to a file.
+
+Hint: Perhaps collect them all up in a single variable and dump that into a pickle file.
+
+Use just the \texttt{pickle.dump} function (no dialogue or button!) to dump the errors you are calculating after training:
+\begin{lstlisting}[language=Python]
+pickle.dump(variable_you_saved_errors, 'name_of_file.pkl', "wb" ) )
+\end{lstlisting}
+NB: \texttt{variable\_you\_saved\_errors} is whatever you named it and \texttt{'name\_of\_file.pkl'} is a string containing the name of the file.
+
+\section{Open and Graph Variables}
+To open the weights, in \texttt{open\_weights}, we use the following to load them back into our network:
+\begin{lstlisting}[language=Python]
+self.network.weights_i2h, self.network.weights_h2o = pickle.load(open( dialog.get_filename(), "rb" ) )
+\end{lstlisting}
+Make sure you understand what is going on here. Now start a new file completely called e.g., \texttt{graph.py} and use that to load in the network errors and then decide what you want to do with them. Remember you have to tell python to import the same libraries as we used previously (see the \texttt{import} statements at the top). 
+
+\ \\
+
+If you want to graph them see the tutorial here:
+\ \\
+\texttt{http://matplotlib.org/users/pyplot\_tutorial.html}
+
+This should be easy for the errors and harder for the outputs, since the outputs will need to be somehow evaluated/compressed down to something more easy to graphically depict. Graphically depicting the errors after every 10 epochs of trainign for example might be useful. Thanks about what you need to do to make that happen.
+
+\end{document}

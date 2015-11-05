@@ -1,0 +1,263 @@
+\documentclass{beamer}
+% \usefonttheme{professionalfonts}
+\usefonttheme{professionalfonts}
+
+\usepackage{amsmath}
+\usepackage{cancel}
+%%%%%%%%%%%%%%%%%%%%%%%%% For making hand-outs %%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \documentclass[handout]{beamer}
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{inputred}{HTML}{c30e0e}
+\definecolor{hiddenblue}{HTML}{2626c9}
+\definecolor{outputgreen}{HTML}{008000}
+\newcommand{\figheight}{0.72\textheight}
+% \usepackage{eulervm}
+\usepackage{default}
+\usepackage{caption}
+\usepackage{booktabs,mathptmx,siunitx}
+% \usefonttheme{serif}
+\graphicspath{{img/}}
+\captionsetup{font=scriptsize, labelfont=scriptsize}
+
+
+\usepackage{showexpl}
+
+
+
+\begin{document}
+
+
+
+\begin{frame}[fragile]
+
+\centering\Huge Block Practical: Connectionist models and cognitive processes
+\vfill \huge
+\centering Part 5: \textbf{Writing the Report} \large
+\vfill
+\textit{
+Olivia Guest }
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Overview}
+%\framesubtitle{Not boring, repetitive?}
+        \  \\
+
+\begin{itemize}[<+->]
+\item Due by end of 0th week of Hilary term
+
+\ \\
+
+\ \\
+
+ \item Aim to demonstrate that you understand the basics of the model and the theory
+ 
+\ \\
+
+ \ \\
+ 
+\item Use your answers to the questions from last week to guide you
+
+
+\end{itemize}
+
+
+\end{frame}
+
+
+\begin{frame}[fragile]
+\frametitle{Sections of Report}
+
+        \  \\
+
+\begin{enumerate}[<+->]
+\item Introduction
+
+\ \\
+
+\ \\
+
+\item Methods
+
+\ \\
+
+\ \\
+
+\item Results
+
+\ \\
+
+\ \\
+
+\item Discussion
+
+
+\end{enumerate}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Introduction}
+\framesubtitle{Which cognitive theory and what is the computational model?}
+\begin{itemize}[<+->]
+
+
+\item Explain: theory, what cognitive process/system you plan to model, the high-level architecture of model
+
+\ \\
+
+\ \\
+
+\item Why does modelling help us?
+
+\ \\
+
+\ \\
+
+
+\item What is the goal of the current model?
+
+\ \\
+
+\ \\
+
+
+\item What part of cognition are we modelling and why did we chose this way?
+
+
+\end{itemize}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Methods}
+\framesubtitle{The reader must be able to replicate the model!}
+\begin{itemize}[<+->]
+
+
+\item How did you replicate the model? Language, libraries, etc.
+
+\ \\ 
+
+
+ \item Table with parameters. Why did you chose these values?
+
+\ \\
+
+
+\item What kind of training algorithm? What training patterns?
+
+
+\ \\
+
+
+\item Did you try lots of settings? Document all of them. 
+
+\ \\
+
+\item Are certain values of the parameters essential? Can we absract over ranges of values?
+
+
+\ \\
+
+
+\item When did you chose to stop training? What was the range of the weights when you did? What was the error when you did?
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Results}
+\framesubtitle{How do we test our model and how does it fare?}
+\begin{itemize}[<+->]
+\item What are the experiments you ran? Do you need graphs to demonstrate this?
+
+
+\ \\
+
+\ \\
+
+\item How are you chosing to evaluate your model's output?
+
+
+\ \\
+
+\ \\
+
+\item Are you looking at the hidden layer or the output layer, the sum squared error, something else?
+
+\ \\ 
+
+\ \\
+
+\item Show all the evidence needed to help the reader understand your results.
+
+
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Discussion}
+\framesubtitle{What have we learned?}
+\begin{itemize}[<+->]
+
+\item How does your work for into the broader picture of model and theory? 
+
+\ \\
+
+\ \\
+
+\item Justify what's wrong if there is something wrong with implementation or with model or even with theory
+
+\ \\
+
+\ \\
+
+ \item Is the original paper a good model?
+
+\ \\
+
+\ \\
+
+\item Is your replication a good model and a good implementation? 
+
+
+\end{itemize}
+
+\end{frame}
+\begin{frame}
+\frametitle{Discussion}
+\framesubtitle{What have we learned?}
+\begin{itemize}[<+->]
+
+
+\item Do you understand the original work more?
+
+\ \\
+
+\ \\
+
+
+\item  Discuss the original work and how modelling it yourself (i.e., replicating) helped.
+
+\ \\
+
+\ \\
+
+\item Why is replication useful?
+
+\ \\
+
+\ \\
+\item Are there any experiments you would propose to carry out now you know more?
+\end{itemize}
+\end{frame}
+\end{document}
