@@ -19,8 +19,9 @@
 - Tyler, L. K., Moss, H. E., Durrant-Peatfield, M. R., & Levy, J. P. (2000). **[Conceptual structure and the structure of concepts: A distributed account of category-specific deficits](https://github.com/oliviaguest/connectionism/raw/master/week3/tyler_2000.pdf)**. *Brain and Language*, 75(2), 195-231.
 
 ###4th Week: Writing up Experimental Results
-- Code: [graphs.py](https://github.com/oliviaguest/connectionism/raw/master/week4/graphs.py)
-- Slides: [Part 5: Writing a Lab Report](https://github.com/oliviaguest/connectionism/raw/master/week4/slides/part_5_slides.pdf)
+- Code: [network.py](https://github.com/oliviaguest/connectionism/raw/master/week4/network.py)
+- Slides: [Part 5: Writing the Report Report](https://github.com/oliviaguest/connectionism/raw/master/week4/slides/part_5_slides.pdf)
+- Exercises: [File Input/Output](https://github.com/oliviaguest/connectionism/raw/master/week4/exercises/exercises.pdf)
 
 ##Reading Materials
 - [Essay: A Brief Introduction to Connectionism](http://kimplunkett.org.uk/secondtry/page31/page32/index.html)
