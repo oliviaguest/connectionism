@@ -20,7 +20,7 @@
 
 ###4th Week: Writing up Experimental Results
 - Code: [network.py](https://github.com/oliviaguest/connectionism/raw/master/week4/network.py)
-- Slides: [Part 5: Writing the Report Report](https://github.com/oliviaguest/connectionism/raw/master/week4/slides/part_5_slides.pdf)
+- Slides: [Part 5: Writing the Report](https://github.com/oliviaguest/connectionism/raw/master/week4/slides/part_5_slides.pdf)
 - Exercises: [File Input/Output](https://github.com/oliviaguest/connectionism/raw/master/week4/exercises/exercises.pdf)
 
 ##Reading Materials
