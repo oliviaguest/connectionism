@@ -16,20 +16,20 @@ from scipy.special import expit, logit
 np.set_printoptions(precision=4)
        
        
-#Patterns = [ ## XOR ##
-          #[0.0, 0.0],
-          #[0.0, 1.0],
-          #[1.0, 0.0],
-          #[1.0, 1.0]
-          #]
+Patterns = [ ## XOR ##
+          [0.0, 0.0],
+          [0.0, 1.0],
+          [1.0, 0.0],
+          [1.0, 1.0]
+          ]
 
-#Targets = [
-           #[0.0], #first target, corresponds to first pattern
-           #[1.0],
-           #[1.0],
-           #[0.0],
+Targets = [
+           [0.0], #first target, corresponds to first pattern
+           [1.0],
+           [1.0],
+           [0.0],
          
-          #]    
+          ]    
 
 
           
@@ -765,6 +765,7 @@ class Model:
         gtk.main_quit()
 
     def save_weights(self, widget=None, data=None):
+#     From here to...
         dialog = gtk.FileChooserDialog("Save..",
                                None,
                                gtk.FILE_CHOOSER_ACTION_SAVE,
@@ -779,13 +780,15 @@ class Model:
 
 
         response = dialog.run()
-        if response == gtk.RESPONSE_OK:
-            print dialog.get_filename(), 'selected'
+#       here we are justing asking for the nice save as window, so no need to change!
+        if response == gtk.RESPONSE_OK: # here we are saying if the use clicks the OK button, then do the following
+#             print dialog.get_filename(), 'selected'  #this just prints out the file name the user chose, no need to unless you are worried
+# this is what does the saving, it says save aka dump the weight variables into a file with name provided by user
             pickle.dump([self.network.weights_i2h, self.network.weights_h2o], open(dialog.get_filename(), "wb" ) )
             
-        elif response == gtk.RESPONSE_CANCEL:
-            print 'Closed, no files selected'
-        dialog.destroy()
+        elif response == gtk.RESPONSE_CANCEL: #alternatively if the user clicked cancel (because they don't want to save maybe)
+             print 'Closed, no files selected' #this just prints out that user chose no file and instead cancelled
+        dialog.destroy() # this kills the save window because we either saved or didn't but we are definitely done
         
     def load_weights(self, widget=None, data=None):
         dialog = gtk.FileChooserDialog("Open..",
@@ -820,7 +823,7 @@ class Model:
       # function is NULL and is ignored in the callback function.
       self.window.connect("delete_event", self.delete_event)
       # Here we connect the "destroy" event to a signal handler.  
-      # This event occurs when we call gtk_widget_destroy() on the window,
+      # This event occurs when we call gtk_widget_destroy() on outputsthe window,
       # or if we return FALSE in the "delete_event" callback.
       self.window.connect("destroy", self.destroy)
       self.window.set_title("Network")
@@ -946,13 +949,22 @@ class Model:
       self.hbox2.pack_end(self.quit, expand, fill, padding)
       self.quit.show()
 
-      self.quit = gtk.Button("Load")
-      self.quit.connect("clicked", self.load_weights, None)
-      self.hbox2.pack_end(self.quit, expand, fill, padding)
-      self.quit.show()
+      self.load_weights_button = gtk.Button("Load Weights")
+      self.load_weights_button.connect("clicked", self.load_weights, None)
+      self.hbox2.pack_end(self.load_weights_button, expand, fill, padding)
+      self.load_weights_button.show()
       
-      self.quit = gtk.Button("Save")
-      self.quit.connect("clicked", self.save_weights, None)
+
+      self.save_weights_button = gtk.Button("Save Weights")
+      self.save_weights_button.connect("clicked", self.save_weights, None)
+      self.hbox2.pack_end(self.save_weights_button, expand, fill, padding)
+      self.save_weights_button.show()
+
+      self.save_outputs_button = gtk.Button("Save Outputs")
+      self.save_outputs_button.connect("clicked", self.save_outputs, None)
+      self.hbox2.pack_end(self.save_outputs_button, expand, fill, padding)
+      self.save_outputs_button.show()
+
       self.hbox2.pack_end(self.quit, expand, fill, padding)
       self.quit.show()
 
@@ -980,8 +992,8 @@ class Model:
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a Model instance and show it
 if __name__ == "__main__":
-    Patterns = np.genfromtxt('tyler_patterns.csv',delimiter=',',dtype=int,skip_header=1) 
-    Targets = Patterns
+    #Patterns = np.genfromtxt('tyler_patterns.csv',delimiter=',',dtype=int,skip_header=1) 
+    #Targets = Patterns
     model = Model(Patterns, Targets)
     model.main()
     
