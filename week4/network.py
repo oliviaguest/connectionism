@@ -14,52 +14,6 @@ import pickle
 from scipy.special import expit, logit
 
 np.set_printoptions(precision=4)
-       
-       
-Patterns = [ ## XOR ##
-          [0.0, 0.0],
-          [0.0, 1.0],
-          [1.0, 0.0],
-          [1.0, 1.0]
-          ]
-
-Targets = [
-           [0.0], #first target, corresponds to first pattern
-           [1.0],
-           [1.0],
-           [0.0],
-         
-          ]    
-
-
-          
-#Patterns = [ ## OR ##
-            #[0.0, 0.0],
-            #[0.0, 1.0],
-            #[1.0, 0.0],
-            #[1.0, 1.0]
-           #]
-
-#Targets = [
-           #[0.0], #first target, corresponds to first pattern
-           #[1.0],
-           #[1.0],
-           #[1.0],
-         
-          #]
-
-Patterns = [ ## NOT ##
-            [0.0],
-            [1.0],
-           ]
-
-Targets = [
-           [1.0], #first target, corresponds to first pattern
-           [0.0],
-         
-          ]
-          
-          
           
           
 def Random(max_value, min_value = 0):
@@ -151,7 +105,8 @@ class Network(gtk.DrawingArea):
         self.output_biases = np.zeros(len(targets[0]))
         self.deltas_output_biases = np.zeros_like(targets[0])
         
-        
+        self.rms_for_all_epochs = []
+
         self.error = 0
            
         self.tanh = np.tanh
@@ -323,12 +278,12 @@ class Network(gtk.DrawingArea):
         f = self.activation_function
         
         #Here are the main variables you need to use to run the network
-        print 'Current pattern:', self.patterns[p]    
-        print 'Input states:', self.input_units
-        print 'Hidden states:', self.hidden_units
-        print 'Hidden biases:', self.hidden_biases
-        print 'Output states:', self.output_units 
-        print 'Output biases:', self.output_biases
+        #print 'Current pattern:', self.patterns[p]    
+        #print 'Input states:', self.input_units
+        #print 'Hidden states:', self.hidden_units
+        #print 'Hidden biases:', self.hidden_biases
+        #print 'Output states:', self.output_units 
+        #print 'Output biases:', self.output_biases
         
         #The first thing we need to do is set all out input units to the pattern we need to train on:
         self.input_units = self.patterns[p]
@@ -392,7 +347,7 @@ class Network(gtk.DrawingArea):
       f = self.activation_function
 
 
-      print 'learning rate', self.learning_rate
+      #print 'learning rate', self.learning_rate
       
       ## Forwards phase ##
       self.input_units = self.patterns[p]
@@ -443,9 +398,9 @@ class Network(gtk.DrawingArea):
       
       #self.error = np.mean(np.abs(self.targets[p] - self.output_units))
       #print 'pattern', p, 'error:', self.error
-      print np.sum((self.targets[p] - self.output_units)**2)
+      #print np.sum((self.targets[p] - self.output_units)**2)
       self.rms[p] = np.mean((self.targets[p] - self.output_units)**2)
-      print 'pattern:', p, 'rms:', self.rms[p]
+      #print 'pattern:', p, 'rms:', self.rms[p]
       
       
     def Apply_Deltas(self):
@@ -461,7 +416,7 @@ class Network(gtk.DrawingArea):
       #  self.momentum = 0.05
       #print 'momentum', self.momentum 
 
-      print 'mean rms:', np.mean(self.rms)
+      #print 'mean rms:', np.mean(self.rms)
       
 
       for i in range(N):
@@ -487,9 +442,11 @@ class Network(gtk.DrawingArea):
       self.deltas_h2o = np.zeros_like(self.deltas_h2o)
       self.deltas_hidden_biases = np.zeros_like(self.deltas_hidden_biases)
       self.deltas_output_biases = np.zeros_like(self.deltas_output_biases)
-
-
       
+            
+      # For every epoch I am calculating rms, an epoch ends by definition when we apply weight deltas
+      self.rms_for_all_epochs.append(np.sqrt(np.sum(self.rms)))
+  
       
     def Run(self):
 
@@ -522,12 +479,27 @@ class Network(gtk.DrawingArea):
           
       if self.tick >= self.ticks:
         self.running = False
+        
+        # This where the last pieces of code are called before returning False and stopping Training
+        #This works on mac/linux:
+        #pickle.dump(self.rms, open('errors.pkl', "wb" ) )
+        #For some reason it does not work on Windows. :(
+        #So we can instead try this:
+        f = open('errors'+str(self.ticks)+'.txt', 'wb' ) #Open a file for writing to called errorsX.pkl where X is the number of epochs so far.
+        for item in self.rms_for_all_epochs: # We will print into this file ALL the errors from the first epoch
+          f.write("%f\n" % item)
+        f.close() #Close the file
+        
+        
         return False
       else:
         self.running = True
 
-      print "tick", self.tick, 'pattern', self.current_pattern,'/',len(self.patterns)
 
+     
+      print "tick", self.tick, 'pattern', self.current_pattern,'/',len(self.patterns)
+     
+     
       if self.layers == 2:
         self.Two_Layer_Train(self.current_pattern)
       elif self.layers == 3:
@@ -541,9 +513,9 @@ class Network(gtk.DrawingArea):
         self.tick += 1
         
         if self.layers == 3:
+
           
           # If you call Apply_Deltas here you are applying them after every single pattern has been shown to the network
-          
           self.Apply_Deltas()
         
       else: 
@@ -581,12 +553,9 @@ class Network(gtk.DrawingArea):
         return False
 
     def Propagate(self, pattern):
-      print 'pattern',  pattern
-      print 'self.targets', self.targets
-      print 'self.patterns', self.patterns
+
       self._propagate(pattern)
       
-      print "error", self.error
 
       cr = self.window.cairo_create()
       cr.set_antialias(cairo.ANTIALIAS_NONE)
@@ -766,7 +735,7 @@ class Model:
 
     def save_weights(self, widget=None, data=None):
 #     From here to...
-        dialog = gtk.FileChooserDialog("Save..",
+        dialog = gtk.FileChooserDialog("Save...",
                                None,
                                gtk.FILE_CHOOSER_ACTION_SAVE,
                                (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
@@ -960,21 +929,12 @@ class Model:
       self.hbox2.pack_end(self.save_weights_button, expand, fill, padding)
       self.save_weights_button.show()
 
-      self.save_outputs_button = gtk.Button("Save Outputs")
-      self.save_outputs_button.connect("clicked", self.save_outputs, None)
-      self.hbox2.pack_end(self.save_outputs_button, expand, fill, padding)
-      self.save_outputs_button.show()
+      #self.save_outputs_button = gtk.Button("Save Outputs")
+      #self.save_outputs_button.connect("clicked", self.save_outputs, None)
+      #self.hbox2.pack_end(self.save_outputs_button, expand, fill, padding)
+      #self.save_outputs_button.show()
 
-      self.hbox2.pack_end(self.quit, expand, fill, padding)
-      self.quit.show()
-
-      
-
-
-
-
-
-      
+     
       #print window.get_size()
       self.window.show()
       
@@ -992,8 +952,8 @@ class Model:
 # If the program is run directly or passed as an argument to the python
 # interpreter then create a Model instance and show it
 if __name__ == "__main__":
-    #Patterns = np.genfromtxt('tyler_patterns.csv',delimiter=',',dtype=int,skip_header=1) 
-    #Targets = Patterns
+    Patterns = np.genfromtxt('tyler_patterns.csv',delimiter=',',dtype=int,skip_header=1) 
+    Targets = Patterns
     model = Model(Patterns, Targets)
     model.main()
     
