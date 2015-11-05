@@ -37,7 +37,8 @@ Hint: Perhaps collect them all up in a single variable and dump that into a pick
 
 Use just the \texttt{pickle.dump} function (no dialogue or button!) to dump the errors you are calculating after training:
 \begin{lstlisting}[language=Python]
-pickle.dump(variable_you_saved_errors, 'name_of_file.pkl', "wb" ) )
+pickle.dump(variable_you_saved_errors, open('name_of_file.pkl', "wb" ))
+ 'name_of_file.pkl', "wb" ) )
 \end{lstlisting}
 NB: \texttt{variable\_you\_saved\_errors} is whatever you named it and \texttt{'name\_of\_file.pkl'} is a string containing the name of the file.
 
