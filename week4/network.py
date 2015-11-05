@@ -934,7 +934,6 @@ class Model:
       #self.hbox2.pack_end(self.save_outputs_button, expand, fill, padding)
       #self.save_outputs_button.show()
 
-     
       #print window.get_size()
       self.window.show()
       
