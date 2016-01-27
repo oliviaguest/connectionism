@@ -32,6 +32,7 @@
 - [Codecademy](www.codecademy.com)
 - [LearnPython.org](http://www.learnpython.org/)
 - [Codewars](http://www.codewars.com/)
+- [Code School: Python](https://www.codeschool.com/paths/python)
 
 ###Books
 - [Learn Python the Hard Way](http://learnpythonthehardway.org/book/)
